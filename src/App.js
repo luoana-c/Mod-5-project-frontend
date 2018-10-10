@@ -1,28 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { Header } from 'semantic-ui-react'
+import ChildrenList from './containers/ChildrenList'
+
+
+import './App.css'
 
 class App extends Component {
-  render() {
+  state = {
+    children: []
+  }
+
+  componentDidMount () {
+    this.getChildren()
+  }
+
+  getChildren = () => {
+    return fetch('http://localhost:3000/api/v1/users/1')
+      .then(res => res.json())
+      .then(user => this.setState({children: user.children}))
+  }
+
+  render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className='App'>
+        <div className='title-header'>
+          <Header as='h1'>Pigtails Stories</Header>
+        </div>
+        <ChildrenList children={this.state.children}/>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
