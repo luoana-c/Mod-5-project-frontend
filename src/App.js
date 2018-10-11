@@ -21,7 +21,7 @@ class App extends Component {
   getKids = () => {
     return fetch('http://localhost:3000/api/v1/users/1')
       .then(res => res.json())
-      .then(user => this.setState({kids: user.children}))
+      .then(user => this.setState({kids: user.kids}))
   }
 
   selectKid = (id) => {
@@ -35,10 +35,6 @@ class App extends Component {
   }
 
   handleSidebarHide = () => this.setState({ sidebarVisible: false })
-
-  // setPageType = () => {
-  //   this.setState({pageType: })
-  // }
 
   sidebarButtons () {
     const pageURL = window.location.href
@@ -55,7 +51,7 @@ class App extends Component {
         return (
           <>
           <Menu.Item as='a'>Home</Menu.Item>
-          <Menu.Item as='a'>Change childdetails</Menu.Item>
+          <Menu.Item as='a'>Change child details</Menu.Item>
           <Menu.Item as='a'>Parents</Menu.Item>
           <Menu.Item as='a'>Log out</Menu.Item>
           </>
@@ -69,8 +65,8 @@ class App extends Component {
         {/* <div className='title-header'>
           <Header as='h1'>Pigtails Stories</Header>
         </div> */}
-          <Button icon onClick={this.toggleSidebarVisibility}><Icon name='bars' /></Button>
-         <Sidebar.Pushable as={Segment}>
+        {/* <Button icon onClick={this.toggleSidebarVisibility}><Icon name='bars' /></Button>
+        <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
             animation='overlay'
@@ -81,19 +77,22 @@ class App extends Component {
             visible={this.state.sidebarVisible}
             width='thin'
           >
+            
             {this.sidebarButtons()}
           </Sidebar>
 
-          <Sidebar.Pusher>
+          <Sidebar.Pusher> */}
+            <div className='content'>
             <BrowserRouter>
               <Switch>
                 <Route exact path="/kids" component={props => <KidsList kids={this.state.kids} {...props}/>} />
                 <Route path="/kids/:id" component={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} {...props}/> : <Loading />} />
-                
+             
               </Switch>
             </BrowserRouter>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+            </div>
+          {/* </Sidebar.Pusher>
+        </Sidebar.Pushable> */}
       </div>
     )
   }
