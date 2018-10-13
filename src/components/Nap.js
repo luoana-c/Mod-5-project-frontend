@@ -13,29 +13,6 @@ class Nap extends React.Component {
       showEndNapPicker: false
     }
 
-    handleChangeStart = (date) => {
-      // console.log(`changed time: ${date}`)
-      this.setState({ startDate: date }, function() {
-        fetch(`http://localhost:3000/api/v1/naps/${this.state.nap_id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ start: this.state.startDate.format("HH:mm") })
-        })
-          .then(res => res.json())
-          .then(nap => {  
-            this.props.changeNapStartTime(nap, this.state.startDate) 
-          })          
-      })
-
-
-      console.log(this.state.startDate.format("HH:mm"))
-    }
-    
-
-    handleChangeEnd = (date) => {
-      this.setState({ endDate: date })
-    }
-
     startNapPicker = () => {
       return (
         <DatePicker
@@ -76,40 +53,20 @@ class Nap extends React.Component {
       )
     }
 
-    addNapStartTime = (day, time) => {
+    // addNapStart = () => {
 
-      fetch('http://localhost:3000/api/v1/naps', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ day_id: day.id, start: time })
-      })
-        .then(res => res.json())
-        .then(nap => {
-          this.props.addNapToState(nap)
-          console.log(nap.id)
-          this.setState({ nap_id: nap.id })
-        })
-      this.setState({
-        showStartNapPicker: true
-      })
+    // }
+
+    handleChangeStart = (date) => {
+      // this calls the function in NapsList, which updates the start time in the backend when start time is changed
+      this.setState({ startDate: date })
+      this.props.changeNapStartTime(this.props.nap, date)
     }
-    
 
-    addNapEndTime = (time) => {
-      // fetch here to edit the nap and then to add the resp to state
-      // console.log(this.state.nap_id)
-      console.log(this.state)
-      fetch(`http://localhost:3000/api/v1/naps/${this.state.nap_id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ end: time })
-      })
-        .then(res => res.json())
-        .then(nap => this.props.changeNapEndTime(nap, time))
-
-      this.setState({
-        showEndNapPicker: true
-      })
+    handleChangeEnd = (date) => {
+      // this calls the function in NapsList, which updates the end time in the backend when end time is changed
+      this.setState({ endDate: date })
+      this.props.changeNapEndTime(this.props.nap, date)
     }
 
     // deleteNap = (nap) => {}
@@ -127,25 +84,22 @@ class Nap extends React.Component {
             width='50'
           />
 
-          <Button circular onClick={() => this.addNapStartTime(this.props.day, this.state.startDate.format("HH:mm"))} icon='play'>
-            {/* <Icon name='play' /> */}
-          </Button>
-
+          <Button circular onClick={() =>
+          // TODO: check what happends if these buttons are clicked again and again. Override start time, or?
+            this.props.addNapStartTime(this.props.day, moment().format('HH:mm'))
+              .then(this.setState({ startDate: moment(), showStartNapPicker: true }))
+          } icon='play'
+          />
           {this.state.showStartNapPicker && this.startNapPicker()}
 
-          <Button circular onClick={() => this.addNapEndTime(this.state.endDate.format("HH:mm"))} icon='stop' >
-            {/* <Icon name='stop' /> */}
-          </Button>
-
+          <Button circular onClick={() => 
+            this.props.addNapEndTime(this.props.nap, moment().format('HH:mm'))
+              .then(this.setState({ endDate: moment(), showEndNapPicker: true }))
+          } icon='stop' />
           {this.state.showEndNapPicker && this.endNapPicker()}
 
-          <Button circular onClick={this.deleteNap} icon='trash alternate outline'>
-            {/* <Icon name='trash alternate outline' /> */}
-          </Button>
+          <Button circular onClick={this.deleteNap} icon='trash alternate outline' />
 
-          <Button circular icon='add'>
-            {/* <Icon name='add' /> */}
-          </Button>
         </div>
 
       )
