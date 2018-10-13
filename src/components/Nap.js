@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 class Nap extends React.Component {
     state = {
+      nap_id: undefined,
       startDate: moment(),
       endDate: moment(),
       showStartNapPicker: false,
@@ -13,9 +14,23 @@ class Nap extends React.Component {
     }
 
     handleChangeStart = (date) => {
-      console.log(`changed time: ${date}`)
-      this.setState({ startDate: date })
+      // console.log(`changed time: ${date}`)
+      this.setState({ startDate: date }, function() {
+        fetch(`http://localhost:3000/api/v1/naps/${this.state.nap_id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ start: this.state.startDate.format("HH:mm") })
+        })
+          .then(res => res.json())
+          .then(nap => {  
+            this.props.changeNapStartTime(nap, this.state.startDate) 
+          })          
+      })
+
+
+      console.log(this.state.startDate.format("HH:mm"))
     }
+    
 
     handleChangeEnd = (date) => {
       this.setState({ endDate: date })
@@ -62,28 +77,42 @@ class Nap extends React.Component {
     }
 
     addNapStartTime = (day, time) => {
-      // I need to find a way to get the time from the input
-      console.log(time.format("HH:mm"))
+
       fetch('http://localhost:3000/api/v1/naps', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ day_id: day.id, start: time })
       })
         .then(res => res.json())
-        .then(nap => this.props.addNapToState(nap))
+        .then(nap => {
+          this.props.addNapToState(nap)
+          console.log(nap.id)
+          this.setState({ nap_id: nap.id })
+        })
       this.setState({
         showStartNapPicker: true
       })
     }
+    
 
-    addNapEndTime = () => {
+    addNapEndTime = (time) => {
       // fetch here to edit the nap and then to add the resp to state
+      // console.log(this.state.nap_id)
+      console.log(this.state)
+      fetch(`http://localhost:3000/api/v1/naps/${this.state.nap_id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ end: time })
+      })
+        .then(res => res.json())
+        .then(nap => this.props.changeNapEndTime(nap, time))
+
       this.setState({
         showEndNapPicker: true
       })
     }
 
-    deleteNap = (nap) => {}
+    // deleteNap = (nap) => {}
 
     render () {
       const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
@@ -98,13 +127,13 @@ class Nap extends React.Component {
             width='50'
           />
 
-          <Button circular onClick={() => this.addNapStartTime(this.props.day, this.state.startDate)} icon='play'>
+          <Button circular onClick={() => this.addNapStartTime(this.props.day, this.state.startDate.format("HH:mm"))} icon='play'>
             {/* <Icon name='play' /> */}
           </Button>
 
           {this.state.showStartNapPicker && this.startNapPicker()}
 
-          <Button circular onClick={this.addNapEndTime} icon='stop' >
+          <Button circular onClick={() => this.addNapEndTime(this.state.endDate.format("HH:mm"))} icon='stop' >
             {/* <Icon name='stop' /> */}
           </Button>
 

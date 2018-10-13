@@ -47,6 +47,7 @@ class Kid extends React.Component {
     }
     togglePresence = () => {
       if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+        //TODO: https://momentjs.com/docs/#/query/is-same/ (cu parametru pt granularitate)
         this.setState({ presence: !this.state.presence })
         this.createDay()
       }
