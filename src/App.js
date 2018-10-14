@@ -21,7 +21,7 @@ class App extends Component {
   getKids = () => {
     return fetch('http://localhost:3000/api/v1/users/1')
       .then(res => res.json())
-      .then(user => this.setState({kids: user.kids}))
+      .then(user => this.setState({ kids: user.kids }))
   }
 
   selectKid = (id) => {

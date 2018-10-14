@@ -30,10 +30,18 @@ class Kid extends React.Component {
     getDay = (date) => {
       return fetch(`http://localhost:3000/api/v1/kids/${this.props.kid.id}/days/${date.format('YYYY-MM-DD')}`)
         .then(res => res.json())
-        .then(day => this.setState({ day: { id: day.id, date: day.date } }))
-        .then(() => this.state.day.id 
-          ? this.setState({ presence: true })
-          : this.setState({ presence: false }))
+        .then(day => {
+          let newState = {
+            day: { id: day.id, date: day.date }
+          }
+          newState.presence = day.id ? true : false
+          this.setState(newState)
+        })
+
+        // .then(day => this.setState({ day: { id: day.id, date: day.date } }))
+        // .then(() => this.state.day.id 
+        //   ? this.setState({ presence: true })
+        //   : this.setState({ presence: false }))
     }
 
     createDay = () => {
@@ -97,6 +105,7 @@ class Kid extends React.Component {
               // napButtons={this.napButtons}
               present={this.state.presence}
               day={this.state.day}
+              kid={this.props.kid}
             />
           </div>
         </div>

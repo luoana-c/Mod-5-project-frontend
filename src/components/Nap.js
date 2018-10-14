@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Button, Icon, Divider } from 'semantic-ui-react'
+import { Button, Icon, Divider } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -76,13 +76,6 @@ class Nap extends React.Component {
 
       return (
         <div>
-
-          <Image
-            alt=''
-            src={cotURL}
-            height='50'
-            width='50'
-          />
 
           <Button circular onClick={() =>
           // TODO: check what happends if these buttons are clicked again and again. Override start time, or?
