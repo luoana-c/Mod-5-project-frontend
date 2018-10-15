@@ -26,6 +26,7 @@ class NappyPotty extends React.Component {
           {/* <Icon name='add' /> */}
             Add nappy/potty
         </Button>
+        
         {this.props.nappy &&
         <div>
           <p>Wet: {this.props.nappy.wet ? this.props.nappy.wet : '0'}</p>
@@ -34,11 +35,6 @@ class NappyPotty extends React.Component {
           <p>BM: </p>
           <Button circular icon='add' onClick={this.showDropdownButton} />
           {this.state.showDropdown &&
-            // <Dropdown
-            //   placeholder='select type'
-            //   selection options={[{ text: 'normal', value: 'normal' }, { text: 'runny', value: 'runny' }, { text: 'hard', value: 'hard' }]}
-            //   onChange={() => this.props.addNappyBM(options.value)}
-            //   />
             <Dropdown item text='select type'>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => this.hideDropdownButton('normal')}>normal</Dropdown.Item>

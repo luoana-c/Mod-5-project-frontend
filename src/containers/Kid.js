@@ -5,6 +5,7 @@ import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 import NapsList from './NapsList'
 import NappyPotty from '../components/NappyPotty'
+import Food from '../components/Food'
 
 class Kid extends React.Component {
     state = {
@@ -219,6 +220,97 @@ class Kid extends React.Component {
       }
     }
 
+    addFood = () => {
+      if (!this.state.food) {
+        return fetch('http://localhost:3000/api/v1/foods', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ day_id: this.state.day.id })
+        })
+          .then(res => res.json())
+          .then(food => this.setState({ food }))
+      }
+    }
+
+    addFoodHad = (value, type) => {
+      switch (type) {
+        case 'breakfast': {
+          const newState = { day:
+        { ...this.state.day,
+          food: { ...this.state.day.food, breakfast_had: value }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ breakfast_had: value })
+          })
+        }
+
+        case 'am_snack': {
+          const newState = { day:
+        { ...this.state.day,
+          food: { ...this.state.day.food, am_snack_had: value }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ am_snack_had: value })
+          })
+        }
+
+        case 'lunch': {
+          const newState = { day:
+        { ...this.state.day,
+          food: { ...this.state.day.food, lunch_had: value }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lunch_had: value })
+          })
+        }
+
+        case 'pm_snack': {
+          const newState = { day:
+        { ...this.state.day,
+          food: { ...this.state.day.food, pm_snack_had: value }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pm_snack_had: value })
+          })
+        }
+
+        case 'dinner_tea': {
+          const newState = { day:
+        { ...this.state.day,
+          food: { ...this.state.day.food, dinner_tea_had: value }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ dinner_tea_had: value })
+          })
+        }
+      }
+    }
+
     render = () => {
       const fileName = this.props.kid.gender
       const imageUrl = require(`../images/${fileName}.svg`)
@@ -252,8 +344,6 @@ class Kid extends React.Component {
           {this.state.presence &&
             <div>
               <NapsList
-                // napButtons={this.napButtons}
-                present={this.state.presence}
                 day={this.state.day}
                 kid={this.props.kid}
               />
@@ -263,7 +353,14 @@ class Kid extends React.Component {
                 removeNappyWet={this.removeNappyWet}
                 addNappyBM={this.addNappyBM}
                 removeNappyBM={this.removeNappyBM}
-                nappy={this.state.day.nappy_potty} />
+                nappy={this.state.day.nappy_potty}
+              />
+              <Food
+                addFood={this.addFood}
+                addFoodHad={this.addFoodHad}
+                food={this.state.day.food}
+              />
+
             </div>
           }
 
