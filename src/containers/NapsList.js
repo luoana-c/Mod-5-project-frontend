@@ -1,7 +1,7 @@
 import React from 'react'
-import Nap from '../components/Nap'
 import moment from 'moment'
-import { Button, Image } from 'semantic-ui-react'
+import { Button, Image, Icon } from 'semantic-ui-react'
+import Nap from '../components/Nap'
 
 class NapsList extends React.Component {
     state = {
@@ -10,14 +10,15 @@ class NapsList extends React.Component {
 
     componentDidMount () {
       console.log('component did mount')
+      this.getNaps()
     }
 
-    componentDidUpdate (prevProps) {
-      console.log('did update called')
-      if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
-        this.getNaps()
-      }
-    }
+    // componentDidUpdate (prevProps) {
+    //   // console.log('did update called')
+    //   if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
+    //     this.getNaps()
+    //   }
+    // }
 
     getNaps = () => {
       return fetch(`http://localhost:3000/api/v1/kids/${this.props.kid.id}/days/${this.props.day.date}`)
@@ -59,10 +60,15 @@ class NapsList extends React.Component {
       }
 
       const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
+      const indexOfNapToChange = this.state.naps.indexOf(foundNap)
       console.log('foundNap: ' + foundNap.id)
       const napToChange = JSON.parse(JSON.stringify(foundNap))
       napToChange.start = time
-      this.setState({ foundNap: napToChange })
+      
+      const newNaps = this.state.naps.slice()
+      newNaps.splice(indexOfNapToChange, 1, napToChange)
+
+      this.setState({ naps: newNaps })
 
       return fetch(`http://localhost:3000/api/v1/naps/${nap.id}`, {
         method: 'PATCH',
@@ -79,10 +85,15 @@ class NapsList extends React.Component {
       }
 
       const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
+      const indexOfNapToChange = this.state.naps.indexOf(foundNap)
       console.log('foundNap: ' + foundNap.id)
       const napToChange = JSON.parse(JSON.stringify(foundNap))
-      napToChange.start = time
-      this.setState({ foundNap: napToChange })
+      napToChange.end = time
+
+      const newNaps = this.state.naps.slice()
+      newNaps.splice(indexOfNapToChange, 1, napToChange)
+
+      this.setState({ naps: newNaps })
 
       return fetch(`http://localhost:3000/api/v1/naps/${nap.id}`, {
         method: 'PATCH',
@@ -114,29 +125,24 @@ class NapsList extends React.Component {
       const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
       return (
         <div>
-          {this.props.present &&
-          <div>
-            <Image
-              alt=''
-              src={cotURL}
-              height='50'
-              width='50'
-            />
-            <Button circular icon='add' onClick={this.addNap} />
+          <Image alt='' src={cotURL} height='50'width='50' />
+          
+          <Button circular icon='add' onClick={this.addNap} labelPosition='left'>
+            <Icon name='add' />
+            Add nap
+          </Button>
 
-            {this.state.naps && this.state.naps.map(nap =>
-              <Nap
-                changeNapStartTime={this.changeNapStartTime}
-                changeNapEndTime={this.changeNapEndTime}
-                deleteNap={this.deleteNap}
-                day={this.props.day}
-                nap={nap}
-                key={nap.id}
-              />
-            )}
-            {/* <p>Nap: { this.state.naps.length > 0 ? moment.utc(this.state.naps[0].start).local().format('HH:mm') : "N/A" }</p> */}
-          </div>
-          }
+          {this.state.naps && this.state.naps.map(nap =>
+            <Nap
+              changeNapStartTime={this.changeNapStartTime}
+              changeNapEndTime={this.changeNapEndTime}
+              deleteNap={this.deleteNap}
+              day={this.props.day}
+              nap={nap}
+              key={nap.id}
+            />
+          )}
+          {/* <p>Nap: { this.state.naps.length > 0 ? moment.utc(this.state.naps[0].start).local().format('HH:mm') : "N/A" }</p> */}
         </div>
       )
     }

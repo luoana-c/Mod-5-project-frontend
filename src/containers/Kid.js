@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 import NapsList from './NapsList'
+import NappyPotty from '../components/NappyPotty'
 
 class Kid extends React.Component {
     state = {
@@ -32,16 +33,16 @@ class Kid extends React.Component {
         .then(res => res.json())
         .then(day => {
           let newState = {
-            day: { id: day.id, date: day.date }
+            day: day
           }
-          newState.presence = day.id ? true : false
+          newState.presence = !!day.id
           this.setState(newState)
         })
 
-        // .then(day => this.setState({ day: { id: day.id, date: day.date } }))
-        // .then(() => this.state.day.id 
-        //   ? this.setState({ presence: true })
-        //   : this.setState({ presence: false }))
+      // .then(day => this.setState({ day: { id: day.id, date: day.date } }))
+      // .then(() => this.state.day.id
+      //   ? this.setState({ presence: true })
+      //   : this.setState({ presence: false }))
     }
 
     createDay = () => {
@@ -55,20 +56,168 @@ class Kid extends React.Component {
     }
     togglePresence = () => {
       if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
-        //TODO: https://momentjs.com/docs/#/query/is-same/ (cu parametru pt granularitate)
+        // TODO: https://momentjs.com/docs/#/query/is-same/ (cu parametru pt granularitate)
         this.setState({ presence: !this.state.presence })
         this.createDay()
       }
     }
 
-    // napButtons () {
-    //   return (
-    //     <>
-    //       stuff
-    //       <Image />
-    //     </>
-    //   )
-    // }
+    addNappy = () => {
+      if (!this.state.nappy_potty) {
+        return fetch('http://localhost:3000/api/v1/nappy_potties', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ day_id: this.state.day.id })
+        })
+          .then(res => res.json())
+          .then(nappyPotty => this.setState({ nappy_potty: nappyPotty }))
+      }
+    }
+
+    addNappyWet = () => {
+      let wetCount = this.state.day.nappy_potty.wet
+
+      const newState = { day:
+        { ...this.state.day,
+          nappy_potty: { ...this.state.day.nappy_potty, wet: (wetCount ? (wetCount + 1) : 1) }
+        }
+      }
+      // console.log('new kid state:', newState)
+      this.setState(newState)
+
+      console.log(this.state.day.nappy_potty.id)
+      return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wet: (wetCount ? (wetCount + 1) : 1) })
+      })
+    }
+
+    removeNappyWet = () => {
+      let wetCount = this.state.day.nappy_potty.wet
+      const newState = { day:
+        { ...this.state.day,
+          nappy_potty: { ...this.state.day.nappy_potty, wet: (wetCount > 0 ? (wetCount - 1) : 0) }
+        }
+      }
+
+      this.setState(newState)
+      return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wet: (wetCount > 0 ? (wetCount - 1) : 0) })
+      })
+    }
+
+    addNappyBM = (type) => {
+      switch (type) {
+        case 'normal': {
+          let bmNormalCount = this.state.day.nappy_potty.bm_normal
+
+          const newState = { day:
+        { ...this.state.day,
+          nappy_potty: { ...this.state.day.nappy_potty, bm_normal: (bmNormalCount ? (bmNormalCount + 1) : 1) }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bm_normal: (bmNormalCount ? (bmNormalCount + 1) : 1) })
+          })
+        }
+
+        case 'runny': {
+          let bmRunnyCount = this.state.day.nappy_potty.bm_runny
+
+          const newState = { day:
+        { ...this.state.day,
+          nappy_potty: { ...this.state.day.nappy_potty, bm_runny: (bmRunnyCount ? (bmRunnyCount + 1) : 1) }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bm_runny: (bmRunnyCount ? (bmRunnyCount + 1) : 1) })
+          })
+        }
+
+        case 'hard': {
+          let bmHardCount = this.state.day.nappy_potty.bm_hard
+
+          const newState = { day:
+        { ...this.state.day,
+          nappy_potty: { ...this.state.day.nappy_potty, bm_hard: (bmHardCount ? (bmHardCount + 1) : 1) }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bm_hard: (bmHardCount ? (bmHardCount + 1) : 1) })
+          })
+        }
+      }
+    }
+
+    removeNappyBM = (type) => {
+      switch (type) {
+        case 'normal': {
+          let bmNormalCount = this.state.day.nappy_potty.bm_normal
+
+          const newState = { day:
+        { ...this.state.day,
+          nappy_potty: { ...this.state.day.nappy_potty, bm_normal: (bmNormalCount > 0 ? (bmNormalCount - 1) : 0) }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bm_normal: (bmNormalCount > 0 ? (bmNormalCount - 1) : 0) })
+          })
+        }
+
+        case 'runny': {
+          let bmRunnyCount = this.state.day.nappy_potty.bm_runny
+
+          const newState = { day:
+        { ...this.state.day,
+          nappy_potty: { ...this.state.day.nappy_potty, bm_runny: (bmRunnyCount > 0 ? (bmRunnyCount - 1) : 0) }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bm_runny: (bmRunnyCount > 0 ? (bmRunnyCount - 1) : 0) })
+          })
+        }
+
+        case 'hard': {
+          let bmHardCount = this.state.day.nappy_potty.bm_hard
+
+          const newState = { day:
+        { ...this.state.day,
+          nappy_potty: { ...this.state.day.nappy_potty, bm_hard: (bmHardCount > 0 ? (bmHardCount - 1) : 0) }
+        }
+          }
+          this.setState(newState)
+
+          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bm_hard: (bmHardCount > 0 ? (bmHardCount - 1) : 0) })
+          })
+        }
+      }
+    }
 
     render = () => {
       const fileName = this.props.kid.gender
@@ -100,14 +249,24 @@ class Kid extends React.Component {
             {this.state.presence ? 'Present' : 'Absent'}
           </Button>
 
-          <div>
-            <NapsList
-              // napButtons={this.napButtons}
-              present={this.state.presence}
-              day={this.state.day}
-              kid={this.props.kid}
-            />
-          </div>
+          {this.state.presence &&
+            <div>
+              <NapsList
+                // napButtons={this.napButtons}
+                present={this.state.presence}
+                day={this.state.day}
+                kid={this.props.kid}
+              />
+              <NappyPotty
+                addNappy={this.addNappy}
+                addNappyWet={this.addNappyWet}
+                removeNappyWet={this.removeNappyWet}
+                addNappyBM={this.addNappyBM}
+                removeNappyBM={this.removeNappyBM}
+                nappy={this.state.day.nappy_potty} />
+            </div>
+          }
+
         </div>
       )
     }

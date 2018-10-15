@@ -20,7 +20,7 @@ class Nap extends React.Component {
           selected={this.state.startDate}
           selectsStart
           startDate={this.state.startDate}
-          endDate={this.state.endDate}
+          // endDate={this.state.endDate}
           onChange={this.handleChangeStart}
           showTimeSelect
           utcOffset={0}
@@ -40,8 +40,8 @@ class Nap extends React.Component {
           placeholderText='Click to select a date'
           selected={this.state.endDate}
           selectsEnd
-          startDate={this.state.startDate}
-          endDate={this.state.endDate}
+          startDate={this.state.endDate}
+          // endDate={this.state.endDate}
           onChange={this.handleChangeEnd}
           showTimeSelect
           showTimeSelectOnly
@@ -74,7 +74,7 @@ class Nap extends React.Component {
 
           <Button circular onClick={() =>
           // TODO: check what happends if these buttons are clicked again and again. Override start time, or?
-            this.props.changeNapStartTime(this.props.nap, moment().format('HH:mm'))
+            this.props.changeNapStartTime(this.props.nap, moment())
               .then(this.setState({ startDate: moment(), showStartNapPicker: true }))
           } icon='play'
           />
@@ -82,7 +82,7 @@ class Nap extends React.Component {
           <p>Start time: {this.props.nap.start && moment(this.props.nap.start).format("HH:mm") }</p>
 
           <Button circular onClick={() => 
-            this.props.changeNapEndTime(this.props.nap, moment().format('HH:mm'))
+            this.props.changeNapEndTime(this.props.nap, moment())
               .then(this.setState({ endDate: moment(), showEndNapPicker: true }))
           } icon='stop' />
           {this.state.showEndNapPicker && this.endNapPicker()}
