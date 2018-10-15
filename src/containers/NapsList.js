@@ -1,5 +1,6 @@
 import React from 'react'
 import Nap from '../components/Nap'
+import moment from 'moment'
 import { Button, Image } from 'semantic-ui-react'
 
 class NapsList extends React.Component {
@@ -11,9 +12,9 @@ class NapsList extends React.Component {
       console.log('component did mount')
     }
 
-    componentDidUpdate(prevProps) {
-      console.log("did update called")
-      if(prevProps.day.id !== this.props.day.id && this.props.day.id) {
+    componentDidUpdate (prevProps) {
+      console.log('did update called')
+      if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
         this.getNaps()
       }
     }
@@ -22,8 +23,10 @@ class NapsList extends React.Component {
       return fetch(`http://localhost:3000/api/v1/kids/${this.props.kid.id}/days/${this.props.day.date}`)
         .then(res => res.json())
         .then(day => {
-          console.log(day.naps)
-          this.setState({ naps: day.naps })
+          let sortedNaps = day.naps.sort((nap1, nap2) => {
+            return (nap1.id - nap2.id)
+          })
+          this.setState({ naps: sortedNaps })
         })
     }
 
@@ -42,34 +45,60 @@ class NapsList extends React.Component {
         })
     }
 
-    addNapStartTime = (nap, time) => {
+    changeNapStartTime = (nap, time) => {
       // updates the backend with a start nap time
       // updates the state in NapsList with start nap time
-      // it shows the timepicker for start of nap
+      if (moment.isMoment(time)) {
+        // Creeaza o noua data UTC din data initiala care are offset info
+        // Pe urma adauga la ea offset infoul datei de input
+        // E un hack: practic creezi o noua data UTC care sa aibe valoare datei non UTC
+        // Exemplu
+        // 2000-01-01 ora 18:00+1:00 (non UTC) devine
+        // 2000-01-01 ora 18:00 (UTC)
+        time = moment(time).utc().add(time.utcOffset(), 'm')
+      }
+
+      const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
+      console.log('foundNap: ' + foundNap.id)
+      const napToChange = JSON.parse(JSON.stringify(foundNap))
+      napToChange.start = time
+      this.setState({ foundNap: napToChange })
+
       return fetch(`http://localhost:3000/api/v1/naps/${nap.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ start: time })
       })
-        .then(res => res.json())
-        .then(nap => {
-          this.changeNapStartTime(nap, time)
-        })
     }
 
-    addNapEndTime = (nap, time) => {
+    changeNapEndTime = (nap, time) => {
       // updates the backend with an end nap time
       // updates the state in NapsList with end nap time
+      if (moment.isMoment(time)) {
+        time = moment(time).utc().add(time.utcOffset(), 'm')
+      }
+
+      const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
+      console.log('foundNap: ' + foundNap.id)
+      const napToChange = JSON.parse(JSON.stringify(foundNap))
+      napToChange.start = time
+      this.setState({ foundNap: napToChange })
+
       return fetch(`http://localhost:3000/api/v1/naps/${nap.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ end: time })
       })
-        .then(res => res.json())
-        .then(nap => {
-          this.changeNapEndTime(nap, time)
-        })
     }
+
+     deleteNap = (nap) => {
+       // const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
+       // console.log("foundNap: " + foundNap.id)
+       const newNapArray = this.state.naps.filter(stateNap => stateNap.id !== nap.id)
+       this.setState({ naps: newNapArray })
+       return fetch(`http://localhost:3000/api/v1/naps/${nap.id}`, {
+         method: 'DELETE' })
+     }
 
     addNapToState = (nap) => {
       if (this.state.naps) {
@@ -79,34 +108,6 @@ class NapsList extends React.Component {
         let newArray = [nap]
         this.setState({ naps: newArray })
       }
-    }
-
-    changeNapStartTime = (nap, time) => {
-      // this only changes it in the state
-      const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
-      const napToChange = JSON.parse(JSON.stringify(foundNap))
-      napToChange.start = time
-      this.setState({ foundNap: napToChange })
-
-      fetch(`http://localhost:3000/api/v1/naps/${nap.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ start: time.format('HH:mm') })
-      })
-    }
-
-    changeNapEndTime = (nap, time) => {
-      // this only changes it in the state
-      const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
-      const napToChange = JSON.parse(JSON.stringify(foundNap))
-      napToChange.end = time
-      this.setState({ foundNap: napToChange })
-
-      fetch(`http://localhost:3000/api/v1/naps/${nap.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ end: time.format('HH:mm') })
-      })
     }
 
     render () {
@@ -122,17 +123,18 @@ class NapsList extends React.Component {
               width='50'
             />
             <Button circular icon='add' onClick={this.addNap} />
-            
+
             {this.state.naps && this.state.naps.map(nap =>
               <Nap
-                addNapStartTime={this.addNapStartTime}
-                addNapEndTime={this.addNapEndTime}
                 changeNapStartTime={this.changeNapStartTime}
                 changeNapEndTime={this.changeNapEndTime}
+                deleteNap={this.deleteNap}
                 day={this.props.day}
                 nap={nap}
+                key={nap.id}
               />
             )}
+            {/* <p>Nap: { this.state.naps.length > 0 ? moment.utc(this.state.naps[0].start).local().format('HH:mm') : "N/A" }</p> */}
           </div>
           }
         </div>

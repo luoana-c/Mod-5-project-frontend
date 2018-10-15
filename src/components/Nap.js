@@ -7,8 +7,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 class Nap extends React.Component {
     state = {
       nap_id: undefined,
-      startDate: moment(),
-      endDate: moment(),
+      startDate: moment().utc(),
+      endDate: moment().utc(),
       showStartNapPicker: false,
       showEndNapPicker: false
     }
@@ -23,12 +23,13 @@ class Nap extends React.Component {
           endDate={this.state.endDate}
           onChange={this.handleChangeStart}
           showTimeSelect
+          utcOffset={0}
           showTimeSelectOnly
           timeIntervals={10}
           dateFormat='HH:mm'
           timeCaption='Time'
-          minTime={moment().hours(7).minutes(0)}
-          maxTime={moment().hours(20).minutes(30)}
+          minTime={moment().utc().hours(7).minutes(0)}
+          maxTime={moment().utc().hours(20).minutes(30)}
         />
       )
     }
@@ -53,10 +54,6 @@ class Nap extends React.Component {
       )
     }
 
-    // addNapStart = () => {
-
-    // }
-
     handleChangeStart = (date) => {
       // this calls the function in NapsList, which updates the start time in the backend when start time is changed
       this.setState({ startDate: date })
@@ -69,8 +66,6 @@ class Nap extends React.Component {
       this.props.changeNapEndTime(this.props.nap, date)
     }
 
-    // deleteNap = (nap) => {}
-
     render () {
       const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
 
@@ -79,19 +74,21 @@ class Nap extends React.Component {
 
           <Button circular onClick={() =>
           // TODO: check what happends if these buttons are clicked again and again. Override start time, or?
-            this.props.addNapStartTime(this.props.day, moment().format('HH:mm'))
+            this.props.changeNapStartTime(this.props.nap, moment().format('HH:mm'))
               .then(this.setState({ startDate: moment(), showStartNapPicker: true }))
           } icon='play'
           />
           {this.state.showStartNapPicker && this.startNapPicker()}
+          <p>Start time: {this.props.nap.start && moment(this.props.nap.start).format("HH:mm") }</p>
 
           <Button circular onClick={() => 
-            this.props.addNapEndTime(this.props.nap, moment().format('HH:mm'))
+            this.props.changeNapEndTime(this.props.nap, moment().format('HH:mm'))
               .then(this.setState({ endDate: moment(), showEndNapPicker: true }))
           } icon='stop' />
           {this.state.showEndNapPicker && this.endNapPicker()}
+          <p>End time: {this.props.nap.end && moment(this.props.nap.end).format("HH:mm") }</p>
 
-          <Button circular onClick={this.deleteNap} icon='trash alternate outline' />
+          <Button circular onClick={() => this.props.deleteNap(this.props.nap)} icon='trash alternate outline' />
 
         </div>
 
