@@ -12,8 +12,38 @@ class NapsList extends React.Component {
     componentDidMount () {
       console.log('component did mount')
       this.getNaps()
+
+      const channel = this.props.pusher.subscribe('my-channel')
+      channel.bind('my-event', data => {
+        this.addNapToState(JSON.parse(data.message))
+      })
+      channel.bind('delete-nap', data => {
+        this.deleteNapFromState(JSON.parse(data.message))
+      })
     }
 
+
+
+    addNapToState = (nap) => {
+      if (this.state.naps) {
+        if (this.state.naps.map(n => n.id).includes(nap.id)) {
+          this.setState({
+            naps: this.state.naps.map(n => n.id === nap.id ? nap : n)
+          })
+        } else {
+          let newArray = [...this.state.naps, nap]
+          this.setState({ naps: newArray })
+        }
+      } else {
+        let newArray = [nap]
+        this.setState({ naps: newArray })
+      }
+    }
+
+    deleteNapFromState = (nap) => {
+      const newNapArray = this.state.naps.filter(stateNap => stateNap.id !== nap.id)
+      this.setState({ naps: newNapArray })
+    }
     // componentDidUpdate (prevProps) {
     //   // console.log('did update called')
     //   if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
@@ -122,43 +152,33 @@ class NapsList extends React.Component {
        }
      }
 
-    addNapToState = (nap) => {
-      if (this.state.naps) {
-        let newArray = [...this.state.naps, nap]
-        this.setState({ naps: newArray })
-      } else {
-        let newArray = [nap]
-        this.setState({ naps: newArray })
-      }
-    }
-
-    render () {
-      const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
-      return (
-        <div>
-          <Image alt='' src={cotURL} height='50'width='50' />
-          {this.props.currentUser.childminder &&
+     render () {
+       const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
+       return (
+         <div>
+           <Image alt='' src={cotURL} height='50'width='50' />
+           {this.props.currentUser.childminder &&
             <Button circular onClick={this.addNap} >
               {/* <Icon name='add' /> */}
               Add nap
             </Button>
-          }
+           }
 
-          {this.state.naps && this.state.naps.map(nap =>
-            <Nap
-              changeNapStartTime={this.changeNapStartTime}
-              changeNapEndTime={this.changeNapEndTime}
-              deleteNap={this.deleteNap}
-              day={this.props.day}
-              nap={nap}
-              key={nap.id}
-              currentUser={this.props.currentUser}
-            />
-          )}
-          {/* <p>Nap: { this.state.naps.length > 0 ? moment.utc(this.state.naps[0].start).local().format('HH:mm') : "N/A" }</p> */}
-        </div>
-      )
-    }
+           {this.state.naps && this.state.naps.map(nap =>
+             <Nap
+               changeNapStartTime={this.changeNapStartTime}
+               changeNapEndTime={this.changeNapEndTime}
+               deleteNap={this.deleteNap}
+               day={this.props.day}
+               nap={nap}
+               key={nap.id}
+               currentUser={this.props.currentUser}
+             />
+           )}
+           {/* <p>Nap: { this.state.naps.length > 0 ? moment.utc(this.state.naps[0].start).local().format('HH:mm') : "N/A" }</p> */}
+         </div>
+       )
+     }
 }
 
 export default NapsList

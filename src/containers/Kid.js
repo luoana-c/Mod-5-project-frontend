@@ -10,6 +10,15 @@ import NapsList from './NapsList'
 import NappyPotty from '../components/NappyPotty'
 import Food from '../components/Food'
 
+import Pusher from 'pusher-js'
+
+Pusher.logToConsole = true
+
+const pusher = new Pusher('88d92ad5597d2ebdbc7e', {
+  cluster: 'eu',
+  forceTLS: true
+})
+
 class Kid extends React.Component {
     state = {
       day: {
@@ -29,6 +38,12 @@ class Kid extends React.Component {
       console.log(this.state.startDate)
       console.log(this.state.startDate.format('YYYY-MM-DD'))
       this.getDay(this.state.startDate)
+
+      const channel = pusher.subscribe('my-channel')
+      channel.bind('my-event', data => {
+        this.setState({ day: JSON.parse(data.message) })
+      })
+
       // this.getDay()
     }
 
@@ -371,6 +386,7 @@ class Kid extends React.Component {
           {this.state.presence &&
             <div>
               <NapsList
+                pusher={pusher}
                 currentUser={this.props.currentUser}
                 day={this.state.day}
                 kid={this.props.kid}
