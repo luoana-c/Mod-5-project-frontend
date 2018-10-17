@@ -1,6 +1,12 @@
 .App {
   text-align: center;
+  min-height: 100vh;
 }
+
+.content {
+  min-height: 100vh; 
+  overflow-y: auto;
+} 
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -35,3 +41,7 @@
 .react-datepicker__time-list {
   padding: 0;
 }
+
+/* div{
+  border: 1px solid red;
+} */

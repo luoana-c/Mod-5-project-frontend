@@ -344,7 +344,9 @@ class Kid extends React.Component {
             placeholderText='Select a weekday'
           />
           <Link to={`/kids/${this.props.kid.id}/edit`}><Button>Edit child info</Button></Link>
+          <Link to={`/kids/${this.props.kid.id}/parents`}><Button>Parents</Button></Link>
           <Link to={'/kids'}>Go back to children list</Link>
+          
 
           <Image
             alt=''
@@ -358,7 +360,7 @@ class Kid extends React.Component {
           <p>Age: {this.props.kid.age_years} year(s) {this.props.kid.age_months} month(s)</p>
 
           <Button toggle active={this.state.presence} onClick={this.togglePresence}>
-            {this.state.presence ? 'Present' : 'Absent'}
+            {this.state.presence ? 'Mark as absent' : 'Mark as present'}
           </Button>
 
           {this.state.presence &&

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Button, Label } from 'semantic-ui-react'
 
 import API from '../../API'
 
@@ -34,9 +34,11 @@ class SignUpForm extends Component {
         </div>
         <Form className="sign-up-form">
           <Form.Field>
+            <Label>Enter your email</Label>
             <input name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />
           </Form.Field>
           <Form.Field>
+            <Label>Create a password</Label>
             <input name='password' value={this.state.password} type='password' placeholder='Password' onChange={this.handleChange} />
           </Form.Field>
           {/* <Form.Field>

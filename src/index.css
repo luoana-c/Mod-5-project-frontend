@@ -13,8 +13,9 @@ code {
     monospace;
 }
 
-.content {
-  height: 100%; 
-  overflow-y: scroll;
-} 
+
+
+#root {
+  min-height: 100%
+}
 

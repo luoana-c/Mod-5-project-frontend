@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Menu, Button } from 'semantic-ui-react'
+import { Menu, Button, Icon, Sidebar, Segment } from 'semantic-ui-react'
 import { withRouter, Route, Switch } from 'react-router-dom'
 
 import API from './API'
 import KidsList from './containers/KidsList'
+import ParentsList from './containers/ParentsList'
 import Kid from './containers/Kid'
 import KidNewForm from './components/KidNewForm'
 import KidEditForm from './components/KidEditForm'
@@ -140,7 +141,6 @@ class App extends Component {
         {/* <div className='title-header'>
           <Header as='h1'>Pigtails Stories</Header>
         </div> */}
-        {/* <Button icon onClick={this.toggleSidebarVisibility}><Icon name='bars' /></Button>
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
@@ -156,15 +156,23 @@ class App extends Component {
             {this.sidebarButtons()}
           </Sidebar>
 
-          <Sidebar.Pusher> */}
+          <Sidebar.Pusher>
         <div className='content'>
-          {this.state.currentUser && <Button onClick={this.logoutUser}>Log out</Button>}
+        <Button icon onClick={this.toggleSidebarVisibility}><Icon name='bars' /></Button>
+
+          {this.state.currentUser &&
+          <div>
+            <Button onClick={this.logoutUser}>Log out</Button>
+            <p>Welcome, {this.state.currentUser.email}</p>
+          </div>
+          }
 
           {/* <BrowserRouter> */}
 
           <Switch>
             <Route exact path='/kids' component={props => <KidsList kids={this.state.kids} {...props} />} />
             <Route path='/kids/:id/edit' component={props => this.state.kids.length > 0 ? <KidEditForm editKid={this.editKid} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
+            <Route path='/kids/:id/parents' component={props => <ParentsList editKid={this.editKidInState} kid={this.selectKid(props.match.params.id)} {...props} />} />
             <Route path='/kids/:id' component={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
             <Route exact path='/new' component={props => <KidNewForm createKid={this.createKid} {...props} />} />
             <Route exact path='/signup' component={props => <SignUpForm handleUser={this.handleUser} {...props} />} />
@@ -172,8 +180,8 @@ class App extends Component {
           </Switch>
           {/* </BrowserRouter> */}
         </div>
-        {/* </Sidebar.Pusher>
-        </Sidebar.Pushable> */}
+        </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </div>
     )
   }
