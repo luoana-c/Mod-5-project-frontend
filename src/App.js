@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
-import { Header, Sidebar, Menu, Segment, Icon, Button, Divider } from 'semantic-ui-react'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { Menu, Button } from 'semantic-ui-react'
+import { withRouter, Route, Switch } from 'react-router-dom'
 
+import API from './API'
 import KidsList from './containers/KidsList'
 import Kid from './containers/Kid'
 import KidNewForm from './components/KidNewForm'
+import KidEditForm from './components/KidEditForm'
+
+import SignInPage from './components/signup/SignInPage'
+import SignUpForm from './components/signup/SignUpForm'
 
 import './App.css'
 import Loading from './components/Loading'
@@ -12,35 +17,71 @@ import Loading from './components/Loading'
 class App extends Component {
   state = {
     kids: [],
-    currentUser: undefined, 
+    currentUser: window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user')) : undefined,
     sidebarVisible: false
   }
 
   componentDidMount () {
-    this.getKids()
+    if (window.localStorage.getItem('user')) {
+      const user = JSON.parse(window.localStorage.getItem('user'))
+      console.log('current user : ' + user.email)
+      this.setState({ currentUser: { email: user.email, id: user.id, childminder: user.childminder } }, function () {
+        this.getKids(this.state.currentUser)
+      })
+    }
   }
 
-  getKids = () => {
+  handleUser = (user) => {
+    window.localStorage.setItem('user', JSON.stringify(user))
+    this.setState({ currentUser: { email: user.email, id: user.id, childminder: user.childminder } }, function () {
+      this.getKids(this.state.currentUser)
+    })
+  }
+
+  logoutUser = () => {
+    this.setState({ currentUser: undefined, kids: [] })
+    window.localStorage.removeItem('user')
+    this.props.history.push('/signin')
+  }
+  // getKids = () => {
+  //   // TODO: change hardcoded user
+  //   return fetch(API.baseURL + '/users/1')
+  //     .then(res => res.json())
+  //     .then(user => this.setState({ kids: user.kids }))
+  // }
+
+  getKids = (user) => {
     // TODO: change hardcoded user
-    return fetch('http://localhost:3000/api/v1/users/1')
-      .then(res => res.json())
-      .then(user => this.setState({ kids: user.kids }))
+    if (user) {
+      return fetch(API.baseURL + `/users/${user.id}`)
+        .then(res => res.json())
+        .then(user => this.setState({ kids: user.kids }))
+    }
   }
 
   selectKid = (id) => {
     return this.state.kids.find(kid => kid.id === parseInt(id, 10))
   }
 
-  createKid = (first_name, last_name) => {
-    // TODO: change hardcoded user
-    
-    return fetch('http://localhost:3000/api/v1/kids', {
+  createKid = (firsName, lastName, gender, dateOfBirth) => {
+    // TODO: form validation
+    return fetch(API.baseURL + '/kids', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: 1, first_name: first_name, last_name: last_name })
-    }) 
-    .then(res => res.json())
-    .then(kid => this.addKidToState(kid))
+      body: JSON.stringify({ user_id: this.state.currentUser.id, first_name: firsName, last_name: lastName, gender, date_of_birth: dateOfBirth })
+    })
+      .then(res => res.json())
+      .then(kid => this.addKidToState(kid))
+  }
+
+  editKid = (kidId, firstName, lastName, gender, dateOfBirth) => {
+    return fetch(API.baseURL + `/kids/${kidId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ first_name: firstName, last_name: lastName, gender, date_of_birth: dateOfBirth })
+    })
+      .then(res => res.json())
+      .then(kid => this.editKidInState(kid))
   }
 
   addKidToState = (kid) => {
@@ -51,7 +92,15 @@ class App extends Component {
       let newKidArray = [kid]
       this.setState({ kids: newKidArray })
     }
+  }
+  editKidInState = (kid) => {
+    const foundKid = this.state.kids.find(stateKid => stateKid.id === kid.id)
+    const indexOfKidToChange = this.state.kids.indexOf(foundKid)
 
+    const newKids = this.state.kids.slice()
+    newKids.splice(indexOfKidToChange, 1, kid)
+
+    this.setState({ kids: newKids })
   }
 
   toggleSidebarVisibility = () => {
@@ -109,17 +158,19 @@ class App extends Component {
 
           <Sidebar.Pusher> */}
         <div className='content'>
-          
-          <BrowserRouter>
-            
-            <Switch>
-            
-              <Route exact path='/kids' component={props => <KidsList kids={this.state.kids} {...props} />} />
-              <Route path='/kids/:id' component={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
-              <Route exact path='/new' component={props => <KidNewForm {...props} />} />
+          {this.state.currentUser && <Button onClick={this.logoutUser}>Log out</Button>}
 
-            </Switch>
-          </BrowserRouter>
+          {/* <BrowserRouter> */}
+
+          <Switch>
+            <Route exact path='/kids' component={props => <KidsList kids={this.state.kids} {...props} />} />
+            <Route path='/kids/:id/edit' component={props => this.state.kids.length > 0 ? <KidEditForm editKid={this.editKid} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
+            <Route path='/kids/:id' component={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
+            <Route exact path='/new' component={props => <KidNewForm createKid={this.createKid} {...props} />} />
+            <Route exact path='/signup' component={props => <SignUpForm handleUser={this.handleUser} {...props} />} />
+            <Route exact path='/signin' component={props => <SignInPage handleUser={this.handleUser} {...props} />} />
+          </Switch>
+          {/* </BrowserRouter> */}
         </div>
         {/* </Sidebar.Pusher>
         </Sidebar.Pushable> */}
@@ -128,4 +179,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default withRouter(App)

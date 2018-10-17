@@ -1,10 +1,18 @@
 import React from 'react'
-import { Button, Image, Dropdown, Item, Icon, DropdownItem } from 'semantic-ui-react'
+import { Button, Image, Dropdown, DropdownItem } from 'semantic-ui-react'
 
 class NappyPotty extends React.Component {
   state = {
-    showDropdown: false
+    showDropdown: false,
+    showNappy: false
   }
+
+  // componentDidUpdate (prevProps) {
+  //   // console.log('did update called')
+  //   if (prevProps.nappy.id !== this.props.nappy.id && this.props.nappy.id) {
+  //     this.getNaps()
+  //   }
+  // }
 
   showDropdownButton = () => {
     this.setState({ showDropdown: true })
@@ -15,6 +23,11 @@ class NappyPotty extends React.Component {
     this.props.addNappyBM(type)
   }
 
+  addNappyToStateAndAPI = () => {
+    this.props.addNappy()
+    this.setState({ showNappy: true })
+  }
+
   render () {
     const nappyURL = require('../images/135028-baby-collection/svg/diaper.svg')
 
@@ -22,14 +35,14 @@ class NappyPotty extends React.Component {
       <div>
 
         <Image alt='' src={nappyURL} height='50' width='50' />
-        <Button circular icon='add' onClick={this.props.addNappy} labelPosition='left'>
+        <Button circular onClick={this.addNappyToStateAndAPI} >
           {/* <Icon name='add' /> */}
             Add nappy/potty
         </Button>
-        
+
         {this.props.nappy &&
         <div>
-          <p>Wet: {this.props.nappy.wet ? this.props.nappy.wet : '0'}</p>
+          <p>Wet: {this.props.nappy.wet && this.props.nappy.wet }</p>
           <Button circular icon='add' onClick={this.props.addNappyWet} />
           <Button circular icon='minus' onClick={this.props.removeNappyWet} />
           <p>BM: </p>

@@ -5,10 +5,10 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 
-class KidNewForm extends React.Component {
+class KidEditForm extends React.Component {
     state = {
-      genderValue: '',
-      startDate: moment().startOf('day')
+      genderValue: this.props.kid.gender,
+      startDate: this.props.kid.date_of_birth ? moment(this.props.kid.date_of_birth) : moment().startOf('day')
     }
 
     handleChangeGender = (e, { value }) => this.setState({ genderValue: value })
@@ -20,14 +20,14 @@ class KidNewForm extends React.Component {
       return (
         <Form>
           <Form.Group>
-            <Form.Input label='First name' placeholder='First name' onChange={this.handleChangeFirstName} />
+            <Form.Input defaultValue={this.props.kid.first_name} label='First name' placeholder='First name' onChange={this.handleChangeFirstName} />
           </Form.Group>
           <Form.Group>
-            <Form.Input label='Last name' placeholder='Last name' onChange={this.handleChangeLastName} />
+            <Form.Input defaultValue={this.props.kid.last_name} label='Last name' placeholder='Last name' onChange={this.handleChangeLastName} />
           </Form.Group>
 
           <Form.Group>
-            <label>Gender</label>
+            <Label>Gender</Label>
             <Form.Radio
               label='girl'
               value='girl'
@@ -55,11 +55,11 @@ class KidNewForm extends React.Component {
             />
           </Form.Group>
           <Link to='/kids'>
-            <Form.Button onClick={() => this.props.createKid(this.state.firstName, this.state.lastName, this.state.genderValue, this.state.startDate)}>Create child</Form.Button>
+            <Form.Button onClick={() => this.props.editKid(this.props.kid.id, this.state.firstName, this.state.lastName, this.state.genderValue, this.state.startDate)}>Save child</Form.Button>
           </Link>
         </Form>
       )
     }
 }
 
-export default KidNewForm
+export default KidEditForm

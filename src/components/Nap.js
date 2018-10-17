@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Divider } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -67,26 +67,25 @@ class Nap extends React.Component {
     }
 
     render () {
-      const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
-
       return (
         <div>
-
+          {(moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) &&
           <Button circular onClick={() =>
           // TODO: check what happends if these buttons are clicked again and again. Override start time, or?
             this.props.changeNapStartTime(this.props.nap, moment())
               .then(this.setState({ startDate: moment(), showStartNapPicker: true }))
           } icon='play'
-          />
+          />}
           {this.state.showStartNapPicker && this.startNapPicker()}
-          <p>Start time: {this.props.nap.start && moment(this.props.nap.start).format("HH:mm") }</p>
+          <p>Start time: {this.props.nap.start && moment(this.props.nap.start).format('HH:mm') }</p>
 
-          <Button circular onClick={() => 
+          {(moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) &&
+          <Button circular onClick={() =>
             this.props.changeNapEndTime(this.props.nap, moment())
               .then(this.setState({ endDate: moment(), showEndNapPicker: true }))
-          } icon='stop' />
+          } icon='stop' />}
           {this.state.showEndNapPicker && this.endNapPicker()}
-          <p>End time: {this.props.nap.end && moment(this.props.nap.end).format("HH:mm") }</p>
+          <p>End time: {this.props.nap.end && moment(this.props.nap.end).format('HH:mm') }</p>
 
           <Button circular onClick={() => this.props.deleteNap(this.props.nap)} icon='trash alternate outline' />
 

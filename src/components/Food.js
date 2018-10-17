@@ -1,5 +1,6 @@
 import React from 'react'
-import { Image, Button, Checkbox, Form, Field } from 'semantic-ui-react'
+import { Image, Button, Checkbox, Form } from 'semantic-ui-react'
+import moment from 'moment'
 
 class Food extends React.Component {
   state= {
@@ -16,60 +17,74 @@ class Food extends React.Component {
   }
 
   addBreakfastOptions = () => {
-    this.setState({ breakfast: true })
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ breakfast: true })
+    }
   }
 
   handleChangeBreakfast = (e, { value }) => {
-    this.setState({ breakfastValue: value })
-    this.props.addFoodHad(value, 'breakfast')
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ breakfastValue: value })
+      this.props.addFoodHad(value, 'breakfast')
+    }
   }
 
   addAMSnackOptions = () => {
-    this.setState({ am_snack: true })
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ am_snack: true })
+    }
   }
-  
+
   handleChangeAMSnack = (e, { value }) => {
-    this.setState({ amSnackValue: value })
-    this.props.addFoodHad(value, 'am_snack')
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ amSnackValue: value })
+      this.props.addFoodHad(value, 'am_snack')
+    }
   }
 
   addLunchOptions = () => {
-    this.setState({ lunch: true })
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ lunch: true })
+    }
   }
-  
+
   handleChangeLunch = (e, { value }) => {
-    this.setState({ lunchValue: value })
-    this.props.addFoodHad(value, 'lunch')
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ lunchValue: value })
+      this.props.addFoodHad(value, 'lunch')
+    }
   }
 
   addPMSnackOptions = () => {
-    this.setState({ pm_snack: true })
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ pm_snack: true })
+    }
   }
-  
+
   handleChangePMSnack = (e, { value }) => {
-    this.setState({ pmSnackValue: value })
-    this.props.addFoodHad(value, 'pm_snack')
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ pmSnackValue: value })
+      this.props.addFoodHad(value, 'pm_snack')
+    }
   }
 
   addDinnerTeaOptions = () => {
-    this.setState({ dinner_tea: true })
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ dinner_tea: true })
+    }
   }
-  
+
   handleChangeDinnerTea = (e, { value }) => {
-    this.setState({ dinnerTeaValue: value })
-    this.props.addFoodHad(value, 'dinner_tea')
+    if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+      this.setState({ dinnerTeaValue: value })
+      this.props.addFoodHad(value, 'dinner_tea')
+    }
   }
-  
 
   render () {
-    const foodURL = require('../images/135028-baby-collection/svg/feeding-1.svg')
     return (
       <div>
-        <Image alt='' src={foodURL} height='50' width='50' />
-        <Button circular icon='add' onClick={this.props.addFood} labelPosition='left'>
-            Add food
-        </Button>
-
+        
         {this.props.food &&
         <div>
           <Button onClick={this.addBreakfastOptions}>Breakfast:</Button>
@@ -86,7 +101,7 @@ class Food extends React.Component {
                   value='None'
                   checked={this.state.breakfastValue === 'None'}
                   onChange={this.handleChangeBreakfast}
-        
+
                 />
               </Form.Field>
               <Form.Field>
@@ -135,7 +150,7 @@ class Food extends React.Component {
                   value='None'
                   checked={this.state.amSnackValue === 'None'}
                   onChange={this.handleChangeAMSnack}
-        
+
                 />
               </Form.Field>
               <Form.Field>
@@ -184,7 +199,7 @@ class Food extends React.Component {
                   value='None'
                   checked={this.state.lunchValue === 'None'}
                   onChange={this.handleChangeLunch}
-        
+
                 />
               </Form.Field>
               <Form.Field>
@@ -233,7 +248,7 @@ class Food extends React.Component {
                   value='None'
                   checked={this.state.pmSnackValue === 'None'}
                   onChange={this.handleChangePMSnack}
-        
+
                 />
               </Form.Field>
               <Form.Field>
@@ -282,7 +297,7 @@ class Food extends React.Component {
                   value='None'
                   checked={this.state.dinnerTeaValue === 'None'}
                   onChange={this.handleChangeDinnerTea}
-        
+
                 />
               </Form.Field>
               <Form.Field>

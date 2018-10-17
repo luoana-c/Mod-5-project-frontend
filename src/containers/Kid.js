@@ -2,7 +2,10 @@ import React from 'react'
 import { Image, Button } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css'
+
+import API from '../API'
 import NapsList from './NapsList'
 import NappyPotty from '../components/NappyPotty'
 import Food from '../components/Food'
@@ -30,7 +33,7 @@ class Kid extends React.Component {
     }
 
     getDay = (date) => {
-      return fetch(`http://localhost:3000/api/v1/kids/${this.props.kid.id}/days/${date.format('YYYY-MM-DD')}`)
+      return fetch(API.baseURL + `/kids/${this.props.kid.id}/days/${date.format('YYYY-MM-DD')}`)
         .then(res => res.json())
         .then(day => {
           let newState = {
@@ -47,13 +50,13 @@ class Kid extends React.Component {
     }
 
     createDay = () => {
-      return fetch('http://localhost:3000/api/v1/days', {
+      return fetch(API.baseURL + '/days', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ kid_id: this.props.kid.id, date: this.state.startDate.format('YYYY-MM-DD') })
       })
         .then(res => res.json())
-        .then(day => this.setState({ day: { id: day.id, date: day.date } }))
+        .then(day => this.setState({ day }))
     }
     togglePresence = () => {
       if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
@@ -64,249 +67,263 @@ class Kid extends React.Component {
     }
 
     addNappy = () => {
-      if (!this.state.nappy_potty) {
-        return fetch('http://localhost:3000/api/v1/nappy_potties', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ day_id: this.state.day.id })
-        })
-          .then(res => res.json())
-          .then(nappyPotty => this.setState({ nappy_potty: nappyPotty }))
+      if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+        if (!this.state.day.nappy_potty) {
+          return fetch(API.baseURL + '/nappy_potties', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ day_id: this.state.day.id })
+          })
+            .then(res => res.json())
+            .then(day => this.setState({ day }))
+        }
       }
     }
 
     addNappyWet = () => {
-      let wetCount = this.state.day.nappy_potty.wet
+      if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+        let wetCount = this.state.day.nappy_potty.wet
 
-      const newState = { day:
+        const newState = { day:
         { ...this.state.day,
           nappy_potty: { ...this.state.day.nappy_potty, wet: (wetCount ? (wetCount + 1) : 1) }
         }
-      }
-      // console.log('new kid state:', newState)
-      this.setState(newState)
+        }
+        // console.log('new kid state:', newState)
+        this.setState(newState)
 
-      console.log(this.state.day.nappy_potty.id)
-      return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ wet: (wetCount ? (wetCount + 1) : 1) })
-      })
+        console.log(this.state.day.nappy_potty.id)
+        return fetch(API.baseURL + `/nappy_potties/${this.state.day.nappy_potty.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ wet: (wetCount ? (wetCount + 1) : 1) })
+        })
+      }
     }
 
     removeNappyWet = () => {
-      let wetCount = this.state.day.nappy_potty.wet
-      const newState = { day:
+      if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+        let wetCount = this.state.day.nappy_potty.wet
+        const newState = { day:
         { ...this.state.day,
           nappy_potty: { ...this.state.day.nappy_potty, wet: (wetCount > 0 ? (wetCount - 1) : 0) }
         }
-      }
+        }
 
-      this.setState(newState)
-      return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ wet: (wetCount > 0 ? (wetCount - 1) : 0) })
-      })
+        this.setState(newState)
+        return fetch(API.baseURL + `/nappy_potties/${this.state.day.nappy_potty.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ wet: (wetCount > 0 ? (wetCount - 1) : 0) })
+        })
+      }
     }
 
     addNappyBM = (type) => {
-      switch (type) {
-        case 'normal': {
-          let bmNormalCount = this.state.day.nappy_potty.bm_normal
+      if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+        switch (type) {
+          case 'normal': {
+            let bmNormalCount = this.state.day.nappy_potty.bm_normal
 
-          const newState = { day:
+            const newState = { day:
         { ...this.state.day,
           nappy_potty: { ...this.state.day.nappy_potty, bm_normal: (bmNormalCount ? (bmNormalCount + 1) : 1) }
         }
+            }
+            this.setState(newState)
+
+            return fetch(API.baseURL + `/nappy_potties/${this.state.day.nappy_potty.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ bm_normal: (bmNormalCount ? (bmNormalCount + 1) : 1) })
+            })
           }
-          this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bm_normal: (bmNormalCount ? (bmNormalCount + 1) : 1) })
-          })
-        }
+          case 'runny': {
+            let bmRunnyCount = this.state.day.nappy_potty.bm_runny
 
-        case 'runny': {
-          let bmRunnyCount = this.state.day.nappy_potty.bm_runny
-
-          const newState = { day:
+            const newState = { day:
         { ...this.state.day,
           nappy_potty: { ...this.state.day.nappy_potty, bm_runny: (bmRunnyCount ? (bmRunnyCount + 1) : 1) }
         }
+            }
+            this.setState(newState)
+
+            return fetch(API.baseURL + `/nappy_potties/${this.state.day.nappy_potty.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ bm_runny: (bmRunnyCount ? (bmRunnyCount + 1) : 1) })
+            })
           }
-          this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bm_runny: (bmRunnyCount ? (bmRunnyCount + 1) : 1) })
-          })
-        }
+          case 'hard': {
+            let bmHardCount = this.state.day.nappy_potty.bm_hard
 
-        case 'hard': {
-          let bmHardCount = this.state.day.nappy_potty.bm_hard
-
-          const newState = { day:
+            const newState = { day:
         { ...this.state.day,
           nappy_potty: { ...this.state.day.nappy_potty, bm_hard: (bmHardCount ? (bmHardCount + 1) : 1) }
         }
-          }
-          this.setState(newState)
+            }
+            this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bm_hard: (bmHardCount ? (bmHardCount + 1) : 1) })
-          })
+            return fetch(API.baseURL + `/nappy_potties/${this.state.day.nappy_potty.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ bm_hard: (bmHardCount ? (bmHardCount + 1) : 1) })
+            })
+          }
         }
       }
     }
 
     removeNappyBM = (type) => {
-      switch (type) {
-        case 'normal': {
-          let bmNormalCount = this.state.day.nappy_potty.bm_normal
+      if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+        switch (type) {
+          case 'normal': {
+            let bmNormalCount = this.state.day.nappy_potty.bm_normal
 
-          const newState = { day:
+            const newState = { day:
         { ...this.state.day,
           nappy_potty: { ...this.state.day.nappy_potty, bm_normal: (bmNormalCount > 0 ? (bmNormalCount - 1) : 0) }
         }
+            }
+            this.setState(newState)
+
+            return fetch(API.baseURL + `/nappy_potties/${this.state.day.nappy_potty.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ bm_normal: (bmNormalCount > 0 ? (bmNormalCount - 1) : 0) })
+            })
           }
-          this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bm_normal: (bmNormalCount > 0 ? (bmNormalCount - 1) : 0) })
-          })
-        }
+          case 'runny': {
+            let bmRunnyCount = this.state.day.nappy_potty.bm_runny
 
-        case 'runny': {
-          let bmRunnyCount = this.state.day.nappy_potty.bm_runny
-
-          const newState = { day:
+            const newState = { day:
         { ...this.state.day,
           nappy_potty: { ...this.state.day.nappy_potty, bm_runny: (bmRunnyCount > 0 ? (bmRunnyCount - 1) : 0) }
         }
+            }
+            this.setState(newState)
+
+            return fetch(API.baseURL + `/nappy_potties/${this.state.day.nappy_potty.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ bm_runny: (bmRunnyCount > 0 ? (bmRunnyCount - 1) : 0) })
+            })
           }
-          this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bm_runny: (bmRunnyCount > 0 ? (bmRunnyCount - 1) : 0) })
-          })
-        }
+          case 'hard': {
+            let bmHardCount = this.state.day.nappy_potty.bm_hard
 
-        case 'hard': {
-          let bmHardCount = this.state.day.nappy_potty.bm_hard
-
-          const newState = { day:
+            const newState = { day:
         { ...this.state.day,
           nappy_potty: { ...this.state.day.nappy_potty, bm_hard: (bmHardCount > 0 ? (bmHardCount - 1) : 0) }
         }
-          }
-          this.setState(newState)
+            }
+            this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/nappy_potties/${this.state.day.nappy_potty.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bm_hard: (bmHardCount > 0 ? (bmHardCount - 1) : 0) })
-          })
+            return fetch(API.baseURL + `/nappy_potties/${this.state.day.nappy_potty.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ bm_hard: (bmHardCount > 0 ? (bmHardCount - 1) : 0) })
+            })
+          }
         }
       }
     }
 
     addFood = () => {
-      if (!this.state.food) {
-        return fetch('http://localhost:3000/api/v1/foods', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ day_id: this.state.day.id })
-        })
-          .then(res => res.json())
-          .then(food => this.setState({ food }))
+      if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+        if (!this.state.food) {
+          return fetch(API.baseURL + '/foods', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ day_id: this.state.day.id })
+          })
+            .then(res => res.json())
+            .then(day => this.setState({ day }))
+        }
       }
     }
 
     addFoodHad = (value, type) => {
-      switch (type) {
-        case 'breakfast': {
-          const newState = { day:
+      if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
+        switch (type) {
+          case 'breakfast': {
+            const newState = { day:
         { ...this.state.day,
           food: { ...this.state.day.food, breakfast_had: value }
         }
+            }
+            this.setState(newState)
+            console.log('this.state.day.food.id: ' + this.state.day.food.id)
+            return fetch(API.baseURL + `/foods/${this.state.day.food.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ breakfast_had: value })
+            })
           }
-          this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ breakfast_had: value })
-          })
-        }
-
-        case 'am_snack': {
-          const newState = { day:
+          case 'am_snack': {
+            const newState = { day:
         { ...this.state.day,
           food: { ...this.state.day.food, am_snack_had: value }
         }
+            }
+            this.setState(newState)
+
+            return fetch(API.baseURL + `/foods/${this.state.day.food.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ am_snack_had: value })
+            })
           }
-          this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ am_snack_had: value })
-          })
-        }
-
-        case 'lunch': {
-          const newState = { day:
+          case 'lunch': {
+            const newState = { day:
         { ...this.state.day,
           food: { ...this.state.day.food, lunch_had: value }
         }
+            }
+            this.setState(newState)
+
+            return fetch(API.baseURL + `/foods/${this.state.day.food.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ lunch_had: value })
+            })
           }
-          this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ lunch_had: value })
-          })
-        }
-
-        case 'pm_snack': {
-          const newState = { day:
+          case 'pm_snack': {
+            const newState = { day:
         { ...this.state.day,
           food: { ...this.state.day.food, pm_snack_had: value }
         }
+            }
+            this.setState(newState)
+
+            return fetch(API.baseURL + `/foods/${this.state.day.food.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ pm_snack_had: value })
+            })
           }
-          this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pm_snack_had: value })
-          })
-        }
-
-        case 'dinner_tea': {
-          const newState = { day:
+          case 'dinner_tea': {
+            const newState = { day:
         { ...this.state.day,
           food: { ...this.state.day.food, dinner_tea_had: value }
         }
-          }
-          this.setState(newState)
+            }
+            this.setState(newState)
 
-          return fetch(`http://localhost:3000/api/v1/foods/${this.state.day.food.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ dinner_tea_had: value })
-          })
+            return fetch(API.baseURL + `/foods/${this.state.day.food.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ dinner_tea_had: value })
+            })
+          }
         }
       }
     }
@@ -314,6 +331,7 @@ class Kid extends React.Component {
     render = () => {
       const fileName = this.props.kid.gender
       const imageUrl = require(`../images/${fileName}.svg`)
+      const foodURL = require('../images/135028-baby-collection/svg/feeding-1.svg')
 
       return (
         <div>
@@ -325,6 +343,8 @@ class Kid extends React.Component {
             maxDate={moment()}
             placeholderText='Select a weekday'
           />
+          <Link to={`/kids/${this.props.kid.id}/edit`}><Button>Edit child info</Button></Link>
+          <Link to={'/kids'}>Go back to children list</Link>
 
           <Image
             alt=''
@@ -355,11 +375,18 @@ class Kid extends React.Component {
                 removeNappyBM={this.removeNappyBM}
                 nappy={this.state.day.nappy_potty}
               />
+              <Image alt='' src={foodURL} height='50' width='50' />
+              <Button circular onClick={this.addFood}>
+                Add food
+              </Button>
+              {this.state.day.food &&
               <Food
                 addFood={this.addFood}
                 addFoodHad={this.addFoodHad}
                 food={this.state.day.food}
+                day={this.state.day}
               />
+              }
 
             </div>
           }
