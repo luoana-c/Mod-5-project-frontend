@@ -8,7 +8,10 @@ class SignUpForm extends Component {
 
     state = {
       email: '',
-      password: ''
+      password: '',
+      name: '',
+      phoneNumber: '',
+      address: ''
     }
 
     handleChange = (e) => {
@@ -20,7 +23,7 @@ class SignUpForm extends Component {
 
 
   handleClickOnSignUp = () => {
-    API.signup(this.state.email, this.state.password)
+    API.signup(this.state.name, this.state.email, this.state.password, this.state.phoneNumber, this.state.address)
       .then(resp => this.props.handleUser(resp))
       .then(() => this.props.history.push('/kids'))
   }
@@ -33,6 +36,19 @@ class SignUpForm extends Component {
           Parent accounts can only be created by a childminder or a nursery.
         </div>
         <Form className="sign-up-form">
+        <Form.Field>
+            <Label>Enter your full name</Label>
+            <input name='name' value={this.state.name} placeholder='Full name' onChange={this.handleChange} />
+          </Form.Field> 
+          <Form.Field>
+            <Label>Enter your phone number</Label>
+            <input name='phoneNumber' value={this.state.phoneNumber} placeholder='Phone number' onChange={this.handleChange} />
+          </Form.Field>
+          <Form.Field>
+            <Label>Enter your address</Label>
+            <input name='address' value={this.state.address} placeholder='Address' onChange={this.handleChange} />
+          </Form.Field>   
+          <br/>       
           <Form.Field>
             <Label>Enter your email</Label>
             <input name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />

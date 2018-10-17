@@ -343,10 +343,13 @@ class Kid extends React.Component {
             maxDate={moment()}
             placeholderText='Select a weekday'
           />
-          <Link to={`/kids/${this.props.kid.id}/edit`}><Button>Edit child info</Button></Link>
-          <Link to={`/kids/${this.props.kid.id}/parents`}><Button>Parents</Button></Link>
+          {this.props.currentUser.childminder &&
+            <Link to={`/kids/${this.props.kid.id}/edit`}><Button>Edit child info</Button></Link>
+          }
+          {this.props.currentUser.childminder &&
+            <Link to={`/kids/${this.props.kid.id}/parents`}><Button>Parents</Button></Link>
+          }
           <Link to={'/kids'}>Go back to children list</Link>
-          
 
           <Image
             alt=''
@@ -359,17 +362,21 @@ class Kid extends React.Component {
           </span>
           <p>Age: {this.props.kid.age_years} year(s) {this.props.kid.age_months} month(s)</p>
 
-          <Button toggle active={this.state.presence} onClick={this.togglePresence}>
-            {this.state.presence ? 'Mark as absent' : 'Mark as present'}
-          </Button>
+          {this.props.currentUser.childminder &&
+            <Button toggle active={this.state.presence} onClick={this.togglePresence}>
+              {this.state.presence ? 'Mark as absent' : 'Mark as present'}
+            </Button>
+          }
 
           {this.state.presence &&
             <div>
               <NapsList
+                currentUser={this.props.currentUser}
                 day={this.state.day}
                 kid={this.props.kid}
               />
               <NappyPotty
+                currentUser={this.props.currentUser}
                 addNappy={this.addNappy}
                 addNappyWet={this.addNappyWet}
                 removeNappyWet={this.removeNappyWet}
@@ -378,11 +385,14 @@ class Kid extends React.Component {
                 nappy={this.state.day.nappy_potty}
               />
               <Image alt='' src={foodURL} height='50' width='50' />
-              <Button circular onClick={this.addFood}>
-                Add food
-              </Button>
+              {this.props.currentUser.childminder &&
+                <Button circular onClick={this.addFood}>
+                  Add food
+                </Button>
+              }
               {this.state.day.food &&
               <Food
+                currentUser={this.props.currentUser}
                 addFood={this.addFood}
                 addFoodHad={this.addFoodHad}
                 food={this.state.day.food}

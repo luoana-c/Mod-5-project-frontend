@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Checkbox, Form } from 'semantic-ui-react'
 import moment from 'moment'
 
 class Food extends React.Component {

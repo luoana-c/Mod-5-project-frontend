@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'semantic-ui-react'
+
 import SignInForm from './SignInForm'
 import { Link } from 'react-router-dom'
 
@@ -23,7 +23,7 @@ class SignInPage extends Component {
         <div >
           <SignInForm handleUser={this.props.handleUser} handleItemClick={this.props.handleItemClick}/>
           <Link to='/signup'>
-            <Button >Sign up</Button>
+            Sign up
           </Link>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { withRouter, Route, Switch } from 'react-router-dom'
 
 import API from './API'
 import KidsList from './containers/KidsList'
+import ParentsKidsList from './containers/ParentsKidsList'
 import ParentsList from './containers/ParentsList'
 import Kid from './containers/Kid'
 import KidNewForm from './components/KidNewForm'
@@ -26,7 +27,7 @@ class App extends Component {
     if (window.localStorage.getItem('user')) {
       const user = JSON.parse(window.localStorage.getItem('user'))
       console.log('current user : ' + user.email)
-      this.setState({ currentUser: { email: user.email, id: user.id, childminder: user.childminder } }, function () {
+      this.setState({ currentUser: { email: user.email, id: user.id, childminder: user.childminder, name: user.name ? user.name : undefined } }, function () {
         this.getKids(this.state.currentUser)
       })
     }
@@ -34,7 +35,7 @@ class App extends Component {
 
   handleUser = (user) => {
     window.localStorage.setItem('user', JSON.stringify(user))
-    this.setState({ currentUser: { email: user.email, id: user.id, childminder: user.childminder } }, function () {
+    this.setState({ currentUser: { email: user.email, id: user.id, childminder: user.childminder, name: user.name } }, function () {
       this.getKids(this.state.currentUser)
     })
   }
@@ -157,30 +158,30 @@ class App extends Component {
           </Sidebar>
 
           <Sidebar.Pusher>
-        <div className='content'>
-        <Button icon onClick={this.toggleSidebarVisibility}><Icon name='bars' /></Button>
+            <div className='content'>
+              <Button icon onClick={this.toggleSidebarVisibility}><Icon name='bars' /></Button>
 
-          {this.state.currentUser &&
+              {this.state.currentUser &&
           <div>
             <Button onClick={this.logoutUser}>Log out</Button>
-            <p>Welcome, {this.state.currentUser.email}</p>
+            <p>Welcome, {this.state.currentUser.name ? this.state.currentUser.name : this.state.currentUser.email }</p>
           </div>
-          }
+              }
 
-          {/* <BrowserRouter> */}
+              {/* <BrowserRouter> */}
 
-          <Switch>
-            <Route exact path='/kids' component={props => <KidsList kids={this.state.kids} {...props} />} />
-            <Route path='/kids/:id/edit' component={props => this.state.kids.length > 0 ? <KidEditForm editKid={this.editKid} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
-            <Route path='/kids/:id/parents' component={props => <ParentsList editKid={this.editKidInState} kid={this.selectKid(props.match.params.id)} {...props} />} />
-            <Route path='/kids/:id' component={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
-            <Route exact path='/new' component={props => <KidNewForm createKid={this.createKid} {...props} />} />
-            <Route exact path='/signup' component={props => <SignUpForm handleUser={this.handleUser} {...props} />} />
-            <Route exact path='/signin' component={props => <SignInPage handleUser={this.handleUser} {...props} />} />
-          </Switch>
-          {/* </BrowserRouter> */}
-        </div>
-        </Sidebar.Pusher>
+              <Switch>
+                <Route exact path='/kids' component={props => this.state.currentUser.childminder ? <KidsList kids={this.state.kids} {...props} /> : <ParentsKidsList kids={this.state.kids} {...props} />} />
+                <Route path='/kids/:id/edit' component={props => this.state.kids.length > 0 ? <KidEditForm editKid={this.editKid} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
+                <Route path='/kids/:id/parents' component={props => this.state.kids.length > 0 ? <ParentsList editKid={this.editKidInState} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
+                <Route path='/kids/:id' component={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} currentUser={this.state.currentUser} {...props} /> : <Loading />} />
+                <Route exact path='/new' component={props => <KidNewForm createKid={this.createKid} {...props} />} />
+                <Route exact path='/signup' component={props => <SignUpForm handleUser={this.handleUser} {...props} />} />
+                <Route exact path='/signin' component={props => <SignInPage handleUser={this.handleUser} {...props} />} />
+              </Switch>
+              {/* </BrowserRouter> */}
+            </div>
+          </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
     )

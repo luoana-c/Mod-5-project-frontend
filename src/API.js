@@ -10,35 +10,33 @@ class API {
     }).then(resp => resp.json())
   }
 
-
-  static signup (email, password) {
+  static signup (name, email, password, phoneNumber, address) {
     return fetch(API.signupURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: email,
-        password: password
+        password: password,
+        name,
+        phone_number: phoneNumber,
+        address
       })
     }).then(resp => resp.json())
   }
 
-
-//   static fetchWishlist (user) {
-//     return fetch(API.baseURL + '/users/' + user.id + '/wishlist/', {
-//       method: 'GET',
-//       headers: { 'Content-Type': 'application/json' }
-//     })
-//   }
-  
+  //   static fetchWishlist (user) {
+  //     return fetch(API.baseURL + '/users/' + user.id + '/wishlist/', {
+  //       method: 'GET',
+  //       headers: { 'Content-Type': 'application/json' }
+  //     })
+  //   }
 }
 
 API.baseURL = 'http://localhost:3000/api/v1'
 API.signinURL = API.baseURL + '/signin'
 API.signupURL = API.baseURL + '/signup'
 
-
 export default API
-
 
 // static validate (token) {
 //   return fetch(API.validateURL, {

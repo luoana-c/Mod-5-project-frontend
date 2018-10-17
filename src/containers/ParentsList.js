@@ -1,11 +1,16 @@
 import React from 'react'
-import { Button, Image, Icon, Form, Label } from 'semantic-ui-react'
+import { Button, Form, Label, Input } from 'semantic-ui-react'
 import API from '../API'
 
 class ParentsList extends React.Component {
     state = {
       parents: this.props.kid ? this.props.kid.parents : [],
-      showParentForm: false
+      showParentForm: false,
+      email: '',
+      password: '',
+      name: '',
+      phoneNumber: '',
+      address: ''
     }
 
     componentDidMount () {
@@ -27,17 +32,24 @@ class ParentsList extends React.Component {
     showParentForm = () => {
       this.setState({ showParentForm: true })
     }
+    cancelParentForm = () => {
+      this.setState({ showParentForm: false })
+    }
 
-    addParent = (email, password) => {
+    addParent = (name, email, password, phoneNumber, address, e) => {
       // this creates the nap instance in the backend, when the addNap button is first clicked
       // it adds the new nap to the state of NapsList
+      e.preventDefault()
       this.setState({ showParentForm: false })
       return fetch(API.baseURL + `/kids/${this.props.kid.id}/parents`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: email,
-          password: password
+          password: password,
+          name,
+          phone_number: phoneNumber,
+          address
         })
       })
         .then(res => res.json())
@@ -47,6 +59,12 @@ class ParentsList extends React.Component {
      deleteParent = (email) => {
        return fetch(API.baseURL + `/kids/${this.props.kid.id}/parents/${email}`, {
          method: 'DELETE' })
+     }
+
+     handleChange = (e) => {
+       this.setState({
+         [e.target.name]: e.target.value
+       })
      }
 
      render () {
@@ -66,29 +84,49 @@ class ParentsList extends React.Component {
            <Button circular onClick={this.showParentForm} >
             Add a parent
            </Button>
-
-           {this.state.showParentForm &&
-           <Form className='add-parent-form'>
-             <Form.Field>
-               <Label>Enter an email</Label>
-               <input name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />
-             </Form.Field>
-             <Form.Field>
-               <Label>Create a password</Label>
-               <input name='password' value={this.state.password} type='password' placeholder='Password' onChange={this.handleChange} />
-             </Form.Field>
-
-             <Button onClick={() => this.handleClickOnSignUp()} type='submit'>Sign Up</Button>
-           </Form>
-           }
            {this.props.kid.parents && this.props.kid.parents.map(parent =>
-             <div>
-               <h3>{parent.name && `Phone: ${parent.name}`}</h3>
+             <div key={parent.id} >
+               <h3>{parent.name && parent.name}</h3>
                <p>Email: {parent.email}</p>
                <p>{parent.phone_number && `Phone: ${parent.phone_number}`}</p>
                <p>{parent.address && `Address: ${parent.address}`}</p>
+               <Button circular onClick={() => this.deleteParent(parent.email)} icon='trash alternate outline' />
              </div>
            )}
+           {this.state.showParentForm &&
+           <Form className='add-parent-form'>
+             <Form.Field>
+               <Label>Enter parent's full name</Label>
+               <Input name='name' value={this.state.name} placeholder='Full name' onChange={this.handleChange} />
+             </Form.Field>
+             <Form.Field>
+               <Label>Enter parent's phone number</Label>
+               <Input name='phoneNumber' value={this.state.phoneNumber} placeholder='Phone number' onChange={this.handleChange} />
+             </Form.Field>
+             <Form.Field>
+               <Label>Enter parent's address</Label>
+               <Input name='address' value={this.state.address} placeholder='Address' onChange={this.handleChange} />
+             </Form.Field>
+             <br />
+             <Form.Field>
+               <Label>Enter an email</Label>
+               <Input name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />
+             </Form.Field>
+             <Form.Field>
+               <Label>Create a password</Label>
+               <Input name='password' value={this.state.password} type='password' placeholder='Password' onChange={this.handleChange} />
+             </Form.Field>
+
+             <Button
+               onClick={(e) =>
+                 this.addParent(this.state.name, this.state.email, this.state.password, this.state.phoneNumber, this.state.address, e)
+               }
+               type='submit'
+             >Create parent</Button>
+             <Button onClick={this.cancelParentForm}>Cancel</Button>
+           </Form>
+           }
+           
            {/* {this.state.naps && this.state.naps.map(nap =>
             <
               changeNapStartTime={this.changeNapStartTime}

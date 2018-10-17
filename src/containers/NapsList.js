@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { Button, Image, Icon } from 'semantic-ui-react'
+import { Button, Image } from 'semantic-ui-react'
 import Nap from '../components/Nap'
 import API from '../API'
 
@@ -137,11 +137,12 @@ class NapsList extends React.Component {
       return (
         <div>
           <Image alt='' src={cotURL} height='50'width='50' />
-
-          <Button circular onClick={this.addNap} >
-            {/* <Icon name='add' /> */}
-            Add nap
-          </Button>
+          {this.props.currentUser.childminder &&
+            <Button circular onClick={this.addNap} >
+              {/* <Icon name='add' /> */}
+              Add nap
+            </Button>
+          }
 
           {this.state.naps && this.state.naps.map(nap =>
             <Nap
@@ -151,6 +152,7 @@ class NapsList extends React.Component {
               day={this.props.day}
               nap={nap}
               key={nap.id}
+              currentUser={this.props.currentUser}
             />
           )}
           {/* <p>Nap: { this.state.naps.length > 0 ? moment.utc(this.state.naps[0].start).local().format('HH:mm') : "N/A" }</p> */}
