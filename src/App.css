@@ -48,13 +48,11 @@
 }
 
 
-
 /* SIDEBAR MENU */
 .side-menu-title-div {
   padding-top: 20vh;
   padding-bottom: 5vh;
-  padding-left: 1vw;
-  padding-right: 1vw;
+  
 }
 
 .side-menu {
@@ -79,4 +77,28 @@ div.item.menu-welcome {
   width: 90vw;
   height:3vh;
   align-items: center;
+}
+
+/* ---------- KIDS LIST ---------- */
+
+.ui.centered.middle.aligned.two.column.grid {
+  padding-bottom: 3vh;
+  padding-top: 3vh;
+}
+
+.kid-list {
+  padding-top: 10vh;
+}
+
+p {
+  font-family: 'Mali'
+}
+p.kid-name {
+  font-size: 3vh;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+a {
+  color: rgba(0,0,0,.87);
 }

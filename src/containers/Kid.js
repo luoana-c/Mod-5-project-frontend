@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Button } from 'semantic-ui-react'
+import { Image, Button, Grid } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
@@ -365,20 +365,23 @@ class Kid extends React.Component {
           {this.props.currentUser.childminder &&
             <Link to={`/kids/${this.props.kid.id}/parents`}><Button>Parents</Button></Link>
           }
-          
 
-          <Image
-            alt=''
-            src={imageUrl}
-            height='50'
-            width='50'
-          />
-          <div className='child-name'>
-          <span style={{ fontWeight: 'bold', fontSize: '20px' }}>
-            {this.props.kid.first_name} {this.props.kid.last_name}
-          </span>
-          <p>Age: {this.props.kid.age_years} year(s) {this.props.kid.age_months} month(s)</p>
-          </div>
+          <Grid verticalAlign='middle' centered columns={2}>
+            <Grid.Column className='kid-pic'width={3}>
+              <Image
+                alt=''
+                src={imageUrl}
+                height='50'
+                width='50'
+              />
+            </Grid.Column>
+
+            <Grid.Column>
+              <p className='kid-name'>{this.props.kid.first_name} {this.props.kid.last_name}</p>
+              <p>Age: {this.props.kid.age_years} year(s) {this.props.kid.age_months} month(s)</p>
+            </Grid.Column>
+          </Grid>
+
           {this.props.currentUser.childminder &&
             <Button toggle active={this.state.presence} onClick={this.togglePresence}>
               {this.state.presence ? 'Mark as absent' : 'Mark as present'}

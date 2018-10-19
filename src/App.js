@@ -116,7 +116,7 @@ class App extends Component {
 
   sidebarButtons () {
     const pageURL = window.location.href
-    const titleURL = require('./images/pigtails_stories.png')
+    const titleURL = require('./images/logo2.png')
 
     switch (pageURL) {
       case 'http://localhost:3001/kids':

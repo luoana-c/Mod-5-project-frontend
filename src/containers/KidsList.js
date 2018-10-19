@@ -5,11 +5,11 @@ import KidCard from '../components/KidCard'
 
 const KidsList = (props) => {
   return (
-    <div>
+    <div className='kid-list'>
       
       { props.kids &&
         props.kids.map((kid) =>
-          <div>
+          <div >
             <KidCard kid={kid} key={kid.id} />
             <Divider />
           </div>
