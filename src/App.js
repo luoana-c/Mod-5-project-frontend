@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Menu, Button, Icon, Sidebar, Segment, Image } from 'semantic-ui-react'
-import { withRouter, Route, Switch } from 'react-router-dom'
+import { withRouter, Route, Switch, Link } from 'react-router-dom'
 
 import API from './API'
 import KidsList from './containers/KidsList'
@@ -41,6 +41,7 @@ class App extends Component {
   }
 
   logoutUser = () => {
+    this.handleSidebarHide()
     this.setState({ currentUser: undefined, kids: [] })
     window.localStorage.removeItem('user')
     this.props.history.push('/signin')
@@ -124,8 +125,10 @@ class App extends Component {
             <div className='side-menu-title-div'>
               <Image src={titleURL} />
             </div>
-            <Menu.Item as='a'>Change personal details</Menu.Item>
-            <Menu.Item as='a'>Log out</Menu.Item>
+            <Link to='/new'>
+              <Menu.Item as='a'onClick={this.handleSidebarHide}>Add a new child</Menu.Item>
+            </Link>
+            <Menu.Item as='a' onClick={this.logoutUser}>Log out</Menu.Item>
           </div>
         )
       default:
@@ -135,10 +138,12 @@ class App extends Component {
               {/* <h1 className='app-title'>Pigtails Stories</h1> */}
               <Image src={titleURL} />
             </div>
-            <Menu.Item as='a'>Home</Menu.Item>
+            <Link to={'/kids'}>
+              <Menu.Item as='a' onClick={this.handleSidebarHide}>Home</Menu.Item>
+            </Link>
             <Menu.Item as='a'>Change child details</Menu.Item>
             <Menu.Item as='a'>Parents</Menu.Item>
-            <Menu.Item as='a'>Log out</Menu.Item>
+            <Menu.Item as='a' onClick={this.logoutUser}>Log out</Menu.Item>
           </div>
         )
     }
@@ -167,15 +172,15 @@ class App extends Component {
 
           <Sidebar.Pusher>
             <div className='content'>
-              <Button icon onClick={this.toggleSidebarVisibility}><Icon name='bars' /></Button>
+              <Menu secondary className='my-top-menu'>
+                <Menu.Item icon='bars' onClick={this.toggleSidebarVisibility} className='menu-bars'></Menu.Item>
 
-              {this.state.currentUser &&
-              <div>
-                <Button onClick={this.logoutUser}>Log out</Button>
-                <p>Welcome, {this.state.currentUser.name ? this.state.currentUser.name : this.state.currentUser.email }</p>
-              </div>
-              }
-
+                <Menu.Item className='menu-welcome' >
+                  {this.state.currentUser &&
+                    `Welcome, ${this.state.currentUser.name ? this.state.currentUser.name : this.state.currentUser.email}`
+                  }
+                </Menu.Item>
+              </Menu>
               {/* <BrowserRouter> */}
 
               <Switch>

@@ -365,7 +365,7 @@ class Kid extends React.Component {
           {this.props.currentUser.childminder &&
             <Link to={`/kids/${this.props.kid.id}/parents`}><Button>Parents</Button></Link>
           }
-          <Link to={'/kids'}>Go back to children list</Link>
+          
 
           <Image
             alt=''

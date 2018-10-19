@@ -9,7 +9,7 @@
 
 .content {
   min-height: 100vh; 
-  overflow-y: auto;
+  
 } 
 
 .App-logo {
@@ -53,10 +53,30 @@
 .side-menu-title-div {
   padding-top: 20vh;
   padding-bottom: 5vh;
-  padding-left: 1vh;
-  padding-right: 1vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
 }
 
 .side-menu {
   font-family: 'Mali', regular;
+}
+
+
+/* ---------- TOP MENU ---------- */
+
+div.ui.secondary.my-top-menu.menu {
+  background: #FADCD1;
+  height: 3vh;
+  font-family: 'Mali', regular;
+}
+
+.menu-bars {
+  width: 10vw;
+  height:3vh;
+}
+
+div.item.menu-welcome {
+  width: 90vw;
+  height:3vh;
+  align-items: center;
 }
