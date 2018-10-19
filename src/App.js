@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Button, Icon, Sidebar, Segment } from 'semantic-ui-react'
+import { Menu, Button, Icon, Sidebar, Segment, Image } from 'semantic-ui-react'
 import { withRouter, Route, Switch } from 'react-router-dom'
 
 import API from './API'
@@ -115,23 +115,31 @@ class App extends Component {
 
   sidebarButtons () {
     const pageURL = window.location.href
+    const titleURL = require('./images/pigtails_stories.png')
 
     switch (pageURL) {
       case 'http://localhost:3001/kids':
         return (
-          <>
+          <div className='side-menu'>
+            <div className='side-menu-title-div'>
+              <Image src={titleURL} />
+            </div>
             <Menu.Item as='a'>Change personal details</Menu.Item>
             <Menu.Item as='a'>Log out</Menu.Item>
-          </>
+          </div>
         )
       default:
         return (
-          <>
+          <div className='side-menu'>
+            <div className='side-menu-title-div'>
+              {/* <h1 className='app-title'>Pigtails Stories</h1> */}
+              <Image src={titleURL} />
+            </div>
             <Menu.Item as='a'>Home</Menu.Item>
             <Menu.Item as='a'>Change child details</Menu.Item>
             <Menu.Item as='a'>Parents</Menu.Item>
             <Menu.Item as='a'>Log out</Menu.Item>
-          </>
+          </div>
         )
     }
   }
@@ -162,10 +170,10 @@ class App extends Component {
               <Button icon onClick={this.toggleSidebarVisibility}><Icon name='bars' /></Button>
 
               {this.state.currentUser &&
-          <div>
-            <Button onClick={this.logoutUser}>Log out</Button>
-            <p>Welcome, {this.state.currentUser.name ? this.state.currentUser.name : this.state.currentUser.email }</p>
-          </div>
+              <div>
+                <Button onClick={this.logoutUser}>Log out</Button>
+                <p>Welcome, {this.state.currentUser.name ? this.state.currentUser.name : this.state.currentUser.email }</p>
+              </div>
               }
 
               {/* <BrowserRouter> */}
@@ -174,7 +182,8 @@ class App extends Component {
                 <Route exact path='/kids' component={props => this.state.currentUser.childminder ? <KidsList kids={this.state.kids} {...props} /> : <ParentsKidsList kids={this.state.kids} {...props} />} />
                 <Route path='/kids/:id/edit' component={props => this.state.kids.length > 0 ? <KidEditForm editKid={this.editKid} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
                 <Route path='/kids/:id/parents' component={props => this.state.kids.length > 0 ? <ParentsList editKid={this.editKidInState} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
-                <Route path='/kids/:id' component={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} currentUser={this.state.currentUser} {...props} /> : <Loading />} />
+                <Route path='/kids/:id' render={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} currentUser={this.state.currentUser} {...props} /> : <Loading />} />
+                {/* render istead of component so that when I open the side menu it doesn't rerender the page and change the date */}
                 <Route exact path='/new' component={props => <KidNewForm createKid={this.createKid} {...props} />} />
                 <Route exact path='/signup' component={props => <SignUpForm handleUser={this.handleUser} {...props} />} />
                 <Route exact path='/signin' component={props => <SignInPage handleUser={this.handleUser} {...props} />} />

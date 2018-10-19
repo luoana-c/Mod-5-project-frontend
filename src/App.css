@@ -1,3 +1,7 @@
+/* div{
+  border: 1px solid red;
+} */
+
 .App {
   text-align: center;
   min-height: 100vh;
@@ -37,11 +41,22 @@
   }
 }
 
+/* DATEPICKER */
 
 .react-datepicker__time-list {
   padding: 0;
 }
 
-/* div{
-  border: 1px solid red;
-} */
+
+
+/* SIDEBAR MENU */
+.side-menu-title-div {
+  padding-top: 20vh;
+  padding-bottom: 5vh;
+  padding-left: 1vh;
+  padding-right: 1vh;
+}
+
+.side-menu {
+  font-family: 'Mali', regular;
+}

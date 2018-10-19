@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { Button, Image } from 'semantic-ui-react'
+import { Button, Image, Grid } from 'semantic-ui-react'
 import Nap from '../components/Nap'
 import API from '../API'
 
@@ -21,8 +21,6 @@ class NapsList extends React.Component {
         this.deleteNapFromState(JSON.parse(data.message))
       })
     }
-
-
 
     addNapToState = (nap) => {
       if (this.state.naps) {
@@ -155,28 +153,37 @@ class NapsList extends React.Component {
      render () {
        const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
        return (
-         <div>
-           <Image alt='' src={cotURL} height='50'width='50' />
-           {this.props.currentUser.childminder &&
-            <Button circular onClick={this.addNap} >
-              {/* <Icon name='add' /> */}
-              Add nap
-            </Button>
-           }
+         <Grid centered verticalAlign='middle' align>
+           <Grid.Row  columns={2}>
+             <Grid.Column >
+               <Image className='elem-icon' alt='' src={cotURL} height='50'width='50' />
+             </Grid.Column>
 
-           {this.state.naps && this.state.naps.map(nap =>
-             <Nap
-               changeNapStartTime={this.changeNapStartTime}
-               changeNapEndTime={this.changeNapEndTime}
-               deleteNap={this.deleteNap}
-               day={this.props.day}
-               nap={nap}
-               key={nap.id}
-               currentUser={this.props.currentUser}
-             />
-           )}
+             <Grid.Column >
+               {this.props.currentUser.childminder &&
+               <Button circular onClick={this.addNap} >
+                 {/* <Icon name='add' /> */}
+              Add nap
+               </Button>
+               }
+             </Grid.Column>
+           </Grid.Row>
+           <Grid.Row columns={1}>
+             {this.state.naps && this.state.naps.map(nap =>
+               <Nap
+                 changeNapStartTime={this.changeNapStartTime}
+                 changeNapEndTime={this.changeNapEndTime}
+                 deleteNap={this.deleteNap}
+                 day={this.props.day}
+                 nap={nap}
+                 key={nap.id}
+                 currentUser={this.props.currentUser}
+               />
+             )}
+           </Grid.Row>
            {/* <p>Nap: { this.state.naps.length > 0 ? moment.utc(this.state.naps[0].start).local().format('HH:mm') : "N/A" }</p> */}
-         </div>
+
+         </Grid>
        )
      }
 }

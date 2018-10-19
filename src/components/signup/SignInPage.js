@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 
 import SignInForm from './SignInForm'
-import { Link } from 'react-router-dom'
-
 
 class SignInPage extends Component {
-
   // signIn(email, password) {
   //   API.signIn(email,password)
   //     .then(userData => {
@@ -17,21 +14,15 @@ class SignInPage extends Component {
 
   // }
 
-  render() {
+  render () {
     return (
       <div >
-        <div >
-          <SignInForm handleUser={this.props.handleUser} handleItemClick={this.props.handleItemClick}/>
-          <Link to='/signup'>
-            Sign up
-          </Link>
-        </div>
+
+        <SignInForm handleUser={this.props.handleUser} handleItemClick={this.props.handleItemClick} />
       </div>
     )
   }
 }
-
-
 
 export default SignInPage
 

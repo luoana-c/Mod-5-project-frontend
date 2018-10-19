@@ -1,0 +1,36 @@
+.item-list {
+    margin: 10px;
+    /* border-radius: 20px; */
+    /* border: 5px solid #D3EEE7; */
+    background: #fcf8f7;
+    border: 5px solid #FADCD1;
+}
+
+.four.column.row.nap {
+    padding-left: 8px;
+}
+
+.ui.button {
+    /* color: #FADCD1; */
+    /* background: #FADCD1; */
+    /* background: #D3EEE7; */
+    box-shadow: -2px 2px 16px rgba(0, 0, 0, 0.6);
+    
+}
+
+.elem-icon {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.react-datepicker__input-container input {
+    width: 80px;
+}
+
+/* .start-time {
+    width: 70px;
+} */
+
+.child-name {
+    font-family: 'Mali', regular;
+}

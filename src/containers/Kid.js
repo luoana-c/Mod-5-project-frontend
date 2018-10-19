@@ -11,6 +11,7 @@ import NappyPotty from '../components/NappyPotty'
 import Food from '../components/Food'
 
 import Pusher from 'pusher-js'
+import './NapsList.css'
 
 Pusher.logToConsole = true
 
@@ -372,11 +373,12 @@ class Kid extends React.Component {
             height='50'
             width='50'
           />
+          <div className='child-name'>
           <span style={{ fontWeight: 'bold', fontSize: '20px' }}>
             {this.props.kid.first_name} {this.props.kid.last_name}
           </span>
           <p>Age: {this.props.kid.age_years} year(s) {this.props.kid.age_months} month(s)</p>
-
+          </div>
           {this.props.currentUser.childminder &&
             <Button toggle active={this.state.presence} onClick={this.togglePresence}>
               {this.state.presence ? 'Mark as absent' : 'Mark as present'}
@@ -385,36 +387,42 @@ class Kid extends React.Component {
 
           {this.state.presence &&
             <div>
-              <NapsList
-                pusher={pusher}
-                currentUser={this.props.currentUser}
-                day={this.state.day}
-                kid={this.props.kid}
-              />
-              <NappyPotty
-                currentUser={this.props.currentUser}
-                addNappy={this.addNappy}
-                addNappyWet={this.addNappyWet}
-                removeNappyWet={this.removeNappyWet}
-                addNappyBM={this.addNappyBM}
-                removeNappyBM={this.removeNappyBM}
-                nappy={this.state.day.nappy_potty}
-              />
-              <Image alt='' src={foodURL} height='50' width='50' />
-              {this.props.currentUser.childminder &&
+              <div className='item-list'>
+                <NapsList
+                  pusher={pusher}
+                  currentUser={this.props.currentUser}
+                  day={this.state.day}
+                  kid={this.props.kid}
+                />
+              </div>
+              <div className='item-list'>
+                <NappyPotty
+                  currentUser={this.props.currentUser}
+                  addNappy={this.addNappy}
+                  addNappyWet={this.addNappyWet}
+                  removeNappyWet={this.removeNappyWet}
+                  addNappyBM={this.addNappyBM}
+                  removeNappyBM={this.removeNappyBM}
+                  nappy={this.state.day.nappy_potty}
+                />
+              </div>
+              <div className='item-list'>
+                <Image alt='' src={foodURL} height='50' width='50' />
+                {this.props.currentUser.childminder &&
                 <Button circular onClick={this.addFood}>
                   Add food
                 </Button>
-              }
-              {this.state.day.food &&
-              <Food
-                currentUser={this.props.currentUser}
-                addFood={this.addFood}
-                addFoodHad={this.addFoodHad}
-                food={this.state.day.food}
-                day={this.state.day}
-              />
-              }
+                }
+                {this.state.day.food &&
+                <Food
+                  currentUser={this.props.currentUser}
+                  addFood={this.addFood}
+                  addFoodHad={this.addFoodHad}
+                  food={this.state.day.food}
+                  day={this.state.day}
+                />
+                }
+              </div>
 
             </div>
           }
