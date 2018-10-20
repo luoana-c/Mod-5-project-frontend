@@ -154,7 +154,7 @@ class NapsList extends React.Component {
        const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
        return (
          <Grid centered verticalAlign='middle' align>
-           <Grid.Row  columns={2}>
+           <Grid.Row columns={2}>
              <Grid.Column >
                <Image className='elem-icon' alt='' src={cotURL} height='50'width='50' />
              </Grid.Column>
@@ -162,7 +162,6 @@ class NapsList extends React.Component {
              <Grid.Column >
                {this.props.currentUser.childminder &&
                <Button circular onClick={this.addNap} >
-                 {/* <Icon name='add' /> */}
               Add nap
                </Button>
                }

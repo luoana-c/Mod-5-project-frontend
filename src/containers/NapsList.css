@@ -1,10 +1,10 @@
 .item-list {
-    margin: 10px;
-    /* border-radius: 20px; */
-    /* border: 5px solid #D3EEE7; */
-    background: #fcf8f7;
-    border: 5px solid #FADCD1;
+    margin: 2vh;
+    /* background: #fcf8f7; */
+    background: white;
+    border: 2px solid #FADCD1;
 }
+
 
 .four.column.row.nap {
     padding-left: 8px;
@@ -34,3 +34,32 @@
 .child-name {
     font-family: 'Mali', regular;
 }
+
+.two.column.row {
+    padding-top: 5vh;
+}
+
+/* button.ui.toggle.button.myButton {
+	-moz-box-shadow: 0px 10px 14px -7px #914f37;
+	-webkit-box-shadow: 0px 10px 14px -7px #914f37;
+	box-shadow: 0px 10px 14px -7px #914f37;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fae7e1), color-stop(1, #f0a387));
+	background:-moz-linear-gradient(top, #fae7e1 5%, #f0a387 100%);
+	background:-webkit-linear-gradient(top, #fae7e1 5%, #f0a387 100%);
+	background:-o-linear-gradient(top, #fae7e1 5%, #f0a387 100%);
+	background:-ms-linear-gradient(top, #fae7e1 5%, #f0a387 100%);
+	background:linear-gradient(to bottom, #fae7e1 5%, #f0a387 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fae7e1', endColorstr='#f0a387',GradientType=0);
+	background-color:#fae7e1;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#383838;
+	font-family:'Mali';
+	font-size: 2.5vh;
+	padding:13px 32px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #914f37;
+} */

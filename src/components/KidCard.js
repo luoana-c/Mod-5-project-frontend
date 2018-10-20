@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, Grid } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import '../App.css'
 
 const KidCard = (props) => {
   const fileName = props.kid.gender

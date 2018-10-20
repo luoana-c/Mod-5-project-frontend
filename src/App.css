@@ -84,6 +84,7 @@ div.item.menu-welcome {
 .ui.centered.middle.aligned.two.column.grid {
   padding-bottom: 3vh;
   padding-top: 3vh;
+  background: #d3eee7;
 }
 
 .kid-list {

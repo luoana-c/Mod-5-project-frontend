@@ -20,7 +20,8 @@ class App extends Component {
   state = {
     kids: [],
     currentUser: window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user')) : undefined,
-    sidebarVisible: false
+    sidebarVisible: false,
+    selectedKid: undefined
   }
 
   componentDidMount () {
@@ -60,6 +61,12 @@ class App extends Component {
         .then(res => res.json())
         .then(user => this.setState({ kids: user.kids }))
     }
+  }
+
+  setSelectedKid = id => {
+    this.setState({
+      selectedKid: id
+    })
   }
 
   selectKid = (id) => {
@@ -115,6 +122,7 @@ class App extends Component {
   handleSidebarHide = () => this.setState({ sidebarVisible: false })
 
   sidebarButtons () {
+
     const pageURL = window.location.href
     const titleURL = require('./images/logo2.png')
 
@@ -139,9 +147,11 @@ class App extends Component {
               <Image src={titleURL} />
             </div>
             <Link to={'/kids'}>
-              <Menu.Item as='a' onClick={this.handleSidebarHide}>Home</Menu.Item>
+              <Menu.Item onClick={this.handleSidebarHide}>Home</Menu.Item>
             </Link>
-            <Menu.Item as='a'>Change child details</Menu.Item>
+            <Link to={`/kids/${this.state.selectedKid}/edit`}>
+              <Menu.Item >Change child details</Menu.Item>
+            </Link>
             <Menu.Item as='a'>Parents</Menu.Item>
             <Menu.Item as='a' onClick={this.logoutUser}>Log out</Menu.Item>
           </div>
@@ -187,7 +197,7 @@ class App extends Component {
                 <Route exact path='/kids' component={props => this.state.currentUser.childminder ? <KidsList kids={this.state.kids} {...props} /> : <ParentsKidsList kids={this.state.kids} {...props} />} />
                 <Route path='/kids/:id/edit' component={props => this.state.kids.length > 0 ? <KidEditForm editKid={this.editKid} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
                 <Route path='/kids/:id/parents' component={props => this.state.kids.length > 0 ? <ParentsList editKid={this.editKidInState} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
-                <Route path='/kids/:id' render={props => this.state.kids.length > 0 ? <Kid kid={this.selectKid(props.match.params.id)} currentUser={this.state.currentUser} {...props} /> : <Loading />} />
+                <Route path='/kids/:id' render={props => this.state.kids.length > 0 ? <Kid setSelectedKid={this.setSelectedKid} kid={this.selectKid(props.match.params.id)} currentUser={this.state.currentUser} {...props} /> : <Loading />} />
                 {/* render istead of component so that when I open the side menu it doesn't rerender the page and change the date */}
                 <Route exact path='/new' component={props => <KidNewForm createKid={this.createKid} {...props} />} />
                 <Route exact path='/signup' component={props => <SignUpForm handleUser={this.handleUser} {...props} />} />

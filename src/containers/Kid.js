@@ -12,6 +12,7 @@ import Food from '../components/Food'
 
 import Pusher from 'pusher-js'
 import './NapsList.css'
+import '../App.css'
 
 Pusher.logToConsole = true
 
@@ -45,6 +46,7 @@ class Kid extends React.Component {
         this.setState({ day: JSON.parse(data.message) })
       })
 
+      this.props.setSelectedKid(this.props.kid.id)
       // this.getDay()
     }
 
@@ -383,7 +385,7 @@ class Kid extends React.Component {
           </Grid>
 
           {this.props.currentUser.childminder &&
-            <Button toggle active={this.state.presence} onClick={this.togglePresence}>
+            <Button className='myButton' toggle active={this.state.presence} onClick={this.togglePresence}>
               {this.state.presence ? 'Mark as absent' : 'Mark as present'}
             </Button>
           }
@@ -410,21 +412,32 @@ class Kid extends React.Component {
                 />
               </div>
               <div className='item-list'>
-                <Image alt='' src={foodURL} height='50' width='50' />
-                {this.props.currentUser.childminder &&
-                <Button circular onClick={this.addFood}>
+
+                <Grid centered verticalAlign='middle' align>
+                  <Grid.Row columns={2}>
+                    <Grid.Column >
+                      <Image className='elem-icon' alt='' src={foodURL} height='50' width='50' />
+                    </Grid.Column>
+
+                    <Grid.Column >
+                      {this.props.currentUser.childminder &&
+                      <Button circular onClick={this.addFood}>
                   Add food
-                </Button>
-                }
-                {this.state.day.food &&
-                <Food
-                  currentUser={this.props.currentUser}
-                  addFood={this.addFood}
-                  addFoodHad={this.addFoodHad}
-                  food={this.state.day.food}
-                  day={this.state.day}
-                />
-                }
+                      </Button>
+                      }
+                    </Grid.Column>
+                  </Grid.Row>
+
+                  {this.state.day.food &&
+                  <Food
+                    currentUser={this.props.currentUser}
+                    addFood={this.addFood}
+                    addFoodHad={this.addFoodHad}
+                    food={this.state.day.food}
+                    day={this.state.day}
+                  />
+                  }
+                </Grid>
               </div>
 
             </div>
