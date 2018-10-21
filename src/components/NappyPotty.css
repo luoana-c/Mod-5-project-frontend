@@ -10,3 +10,14 @@ div.content div.pottyGrid {
     width: 100%;
     margin: 0;
 }
+
+p.nappy-numbers {
+    padding-top: 2.75vh;
+}
+
+p.nappy-names {
+    padding-top: 1vh;
+}
+.ui.button.minus-buttons {
+    margin-top: 2vh;
+}
