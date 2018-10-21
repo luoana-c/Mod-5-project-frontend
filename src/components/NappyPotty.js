@@ -1,5 +1,7 @@
 import React from 'react'
 import { Button, Image, Dropdown, DropdownItem, Grid } from 'semantic-ui-react'
+import './NappyPotty.css'
+
 
 class NappyPotty extends React.Component {
   state = {
@@ -32,7 +34,7 @@ class NappyPotty extends React.Component {
     const nappyURL = require('../images/135028-baby-collection/svg/diaper.svg')
 
     return (
-      <Grid centered verticalAlign='middle' align>
+      <Grid centered verticalAlign='top' align className='pottyGrid'>
         <Grid.Row columns={2}>
           <Grid.Column >
             <Image className='elem-icon' alt='' src={nappyURL} height='50' width='50' />
@@ -51,9 +53,13 @@ class NappyPotty extends React.Component {
 
         {this.props.nappy &&
 
-          <Grid.Row centered columns={2}>
-            <Grid.Column>
-              <p>Wet: {this.props.nappy.wet && this.props.nappy.wet }</p>
+          <Grid.Row columns={4}>
+            <Grid.Column textAlign='center'>
+              <p>Wet</p>
+              <p>{this.props.nappy.wet && this.props.nappy.wet }</p>
+            </Grid.Column>
+
+            <Grid.Column textAlign='center'>
               {this.props.currentUser.childminder &&
               <Button circular icon='add' onClick={this.props.addNappyWet} />
               }
@@ -65,9 +71,6 @@ class NappyPotty extends React.Component {
             <Grid.Column>
               <p>BM: </p>
               {this.props.currentUser.childminder &&
-              <Button circular icon='add' onClick={this.showDropdownButton} />
-              }
-              {this.props.currentUser.childminder &&
             this.state.showDropdown &&
               <Dropdown item text='select type'>
                 <Dropdown.Menu>
@@ -76,34 +79,34 @@ class NappyPotty extends React.Component {
                   <DropdownItem onClick={() => this.hideDropdownButton('hard')}>hard</DropdownItem>
                 </Dropdown.Menu>
               </Dropdown>
-
               }
-
               {this.props.nappy.bm_normal > 0 &&
-              <div>
-                <p> normal: {this.props.nappy.bm_normal}</p>
-                {this.props.currentUser.childminder &&
-                <Button circular icon='minus' onClick={() => this.props.removeNappyBM('normal')} />
-                }
-              </div>
+              <p> normal: {this.props.nappy.bm_normal}</p>
               }
-
               {this.props.nappy.bm_runny > 0 &&
-              <div>
-                <p> runny: {this.props.nappy.bm_runny}</p>
-                {this.props.currentUser.childminder &&
-                <Button circular icon='minus' onClick={() => this.props.removeNappyBM('runny')} />
-                }
-              </div>
+              <p> runny: {this.props.nappy.bm_runny}</p>
               }
-
               {this.props.nappy.bm_hard > 0 &&
-              <div>
-                <p> hard: {this.props.nappy.bm_hard}</p>
-                {this.props.currentUser.childminder &&
+              <p> hard: {this.props.nappy.bm_hard}</p>
+              }
+            </Grid.Column>
+
+            <Grid.Column textAlign='center'>
+              {this.props.currentUser.childminder &&
+                <Button circular icon='add' onClick={this.showDropdownButton} />
+              }
+              {this.props.nappy.bm_normal > 0 &&
+                this.props.currentUser.childminder &&
+                <Button circular icon='minus' onClick={() => this.props.removeNappyBM('normal')} />
+              }
+              {this.props.nappy.bm_runny > 0 &&
+                this.props.currentUser.childminder &&
+                <Button circular icon='minus' onClick={() => this.props.removeNappyBM('runny')} />
+              }
+            
+              {this.props.nappy.bm_hard > 0 &&
+                this.props.currentUser.childminder &&
                 <Button circular icon='minus' onClick={() => this.props.removeNappyBM('hard')} />
-                }
-              </div>
               }
             </Grid.Column>
           </Grid.Row>

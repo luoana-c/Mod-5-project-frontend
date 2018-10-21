@@ -80,3 +80,8 @@ div.content div.napGrid .napRow {
 div.content div.napGrid .column p.timeLabel {
 	margin-top: 10px;
 }
+
+div.content div.napsListGrid {
+	width: 100%;
+    margin: 0;
+}

@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Button, Image, Grid } from 'semantic-ui-react'
 import Nap from '../components/Nap'
 import API from '../API'
+import './NapsList.css'
 
 class NapsList extends React.Component {
     state = {
@@ -153,7 +154,7 @@ class NapsList extends React.Component {
      render () {
        const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
        return (
-         <Grid centered verticalAlign='middle' align>
+         <Grid centered verticalAlign='middle' align className='napsListGrid'>
            <Grid.Row columns={2}>
              <Grid.Column >
                <Image className='elem-icon' alt='' src={cotURL} height='50'width='50' />
