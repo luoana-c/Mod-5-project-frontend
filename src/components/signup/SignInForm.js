@@ -31,6 +31,7 @@ class SignInForm extends Component {
   // // onClick={() => this.props.handleItemClick('Sign In')}
 
   render () {
+    const titleURL = require('../../images/logo2.png')
     return (
       <div className='sign-in-form'>
         <style>{`
@@ -40,26 +41,32 @@ class SignInForm extends Component {
         height: 100%;
       }
     `}</style>
+        <div className='logo-on-forms'>
+          <Image src={titleURL} className='logo-image' />
+        </div>
 
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <div className='sign-in-header'>
-              Sign in or sign up to use the app.
-            </div>
+            <h3 className='sign-in-header'>
+              Please sign in to use the app.
+            </h3>
             <Form size='medium' className='signin-form'>
               <Segment stacked>
                 <Form.Input fluid icon='user' iconPosition='left' name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />
                 <Form.Input fluid icon='lock' iconPosition='left' name='password' value={this.state.password} type='password' placeholder='Password' onChange={this.handleChange} />
-         
+
                 <Button fluid size='medium' onClick={() => this.handleClickOnSignIn()} type='submit'>Sign In</Button>
               </Segment>
             </Form>
             <br />
-            <br />
-
-            <Link to='/signup'>
+            <div>
+              <h3>Don't have an account? </h3>
+              <p>If you are a parent, please contact your childminder or nursery for sign in details.</p>
+              <h3>If you would like to register as a childminder or nursery: </h3>
+              <Link to='/signup' className='signup'>
             Sign up
-            </Link>
+              </Link>
+            </div>
           </Grid.Column>
         </Grid>
 

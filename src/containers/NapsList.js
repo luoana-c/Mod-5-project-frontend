@@ -14,18 +14,28 @@ class NapsList extends React.Component {
       console.log('component did mount')
       this.getNaps()
 
-      const channel = this.props.pusher.subscribe('my-channel')
-      channel.bind('my-event', data => {
-        this.addNapToState(JSON.parse(data.message))
-      })
-      channel.bind('delete-nap', data => {
-        this.deleteNapFromState(JSON.parse(data.message))
-      })
+      // const channel = this.props.pusher.subscribe('my-channel')
+      // channel.bind('my-event', data => {
+      //   this.addNapToState(JSON.parse(data.message))
+      // })
+      // channel.bind('delete-nap', data => {
+      //   this.deleteNapFromState(JSON.parse(data.message))
+      // })
     }
 
     addNapToState = (nap) => {
+      if(!nap || !nap.hasOwnProperty('start')) {
+        return
+      }
+
+      console.log(nap)
+
       if (this.state.naps) {
-        if (this.state.naps.map(n => n.id).includes(nap.id)) {
+        var napFound = this.state.naps.find(function(current) {
+          return current.id === nap.id
+        })
+
+        if (napFound) {
           this.setState({
             naps: this.state.naps.map(n => n.id === nap.id ? nap : n)
           })
@@ -168,7 +178,7 @@ class NapsList extends React.Component {
                }
              </Grid.Column>
            </Grid.Row>
-           {this.state.naps.length > 0 &&
+           {this.state.naps && this.state.naps.length > 0 &&
            <Grid.Row columns={1}>
              {this.state.naps.map(nap =>
                <Nap

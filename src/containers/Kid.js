@@ -41,10 +41,10 @@ class Kid extends React.Component {
       console.log(this.state.startDate.format('YYYY-MM-DD'))
       this.getDay(this.state.startDate)
 
-      const channel = pusher.subscribe('my-channel')
-      channel.bind('my-event', data => {
-        this.setState({ day: JSON.parse(data.message) })
-      })
+      // const channel = pusher.subscribe('my-channel')
+      // channel.bind('my-event', data => {
+      //   this.setState({ day: JSON.parse(data.message) })
+      // })
 
       this.props.setSelectedKid(this.props.kid.id)
       // this.getDay()
@@ -253,7 +253,7 @@ class Kid extends React.Component {
 
     addFood = () => {
       if (this.state.startDate.format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
-        if (!this.state.food) {
+        if (!this.state.day.food) {
           return fetch(API.baseURL + '/foods', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -431,7 +431,6 @@ class Kid extends React.Component {
                   {this.state.day.food &&
                   <Food
                     currentUser={this.props.currentUser}
-                    addFood={this.addFood}
                     addFoodHad={this.addFoodHad}
                     food={this.state.day.food}
                     day={this.state.day}

@@ -24,11 +24,13 @@
 }
 
 .react-datepicker__input-container input {
-    width: 80px;
+	width: 90px;
+	font-family: 'Mali';
 }
 
 div.nap-time .react-datepicker__input-container input {
-    width: 50px;
+	width: 50px;
+	font-family: 'Mali';
 }
 
 /* .start-time {
@@ -80,4 +82,31 @@ div.content div.napGrid .column p.timeLabel {
 div.content div.napsListGrid {
 	width: 100%;
     margin: 0;
+}
+
+/* ---------- BUTTONS ---------- */
+
+.ui.circular.button {
+    border-radius: 10em;
+    border: 2px solid #5BC1A5;
+    color: #5BC1A5;
+    background-color: white;
+	font-family: 'Mali';
+	box-shadow: none;
+}
+
+.ui.button {
+	border-bottom: 2px solid #5BC1A5;
+    color: #5BC1A5;
+    background-color: white;
+	font-family: 'Mali';
+	box-shadow: none;
+}
+
+ .button.ui.active.toggle.button.myButton {
+	background-color: #5BC1A5 !important;
+	color: white !important;
+	font-weight: bold !important;
+	font-size: 2.5vh;
+
 }
