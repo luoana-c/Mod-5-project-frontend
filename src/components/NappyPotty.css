@@ -21,3 +21,16 @@ p.nappy-names {
 .ui.button.minus-buttons {
     margin-top: 2vh;
 }
+
+div.pottyType .two.column.row {
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+.wet.nappy-numbers {
+    padding-top:27px;
+}
+
+.ui.button.wet.minus-buttons {
+    margin-top: 30px;
+}

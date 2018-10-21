@@ -168,8 +168,9 @@ class NapsList extends React.Component {
                }
              </Grid.Column>
            </Grid.Row>
+           {this.state.naps.length > 0 &&
            <Grid.Row columns={1}>
-             {this.state.naps && this.state.naps.map(nap =>
+             {this.state.naps.map(nap =>
                <Nap
                  changeNapStartTime={this.changeNapStartTime}
                  changeNapEndTime={this.changeNapEndTime}
@@ -181,6 +182,7 @@ class NapsList extends React.Component {
                />
              )}
            </Grid.Row>
+           }
            {/* <p>Nap: { this.state.naps.length > 0 ? moment.utc(this.state.naps[0].start).local().format('HH:mm') : "N/A" }</p> */}
 
          </Grid>
