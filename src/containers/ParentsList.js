@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form, Label, Input } from 'semantic-ui-react'
 import API from '../API'
+import { Link } from 'react-router-dom'
 
 class ParentsList extends React.Component {
     state = {
@@ -81,9 +82,7 @@ class ParentsList extends React.Component {
            <span style={{ fontWeight: 'bold', fontSize: '20px' }}>
              {this.props.kid.first_name} {this.props.kid.last_name}
            </span> */}
-           <Button circular onClick={this.showParentForm} >
-            Add a parent
-           </Button>
+
            {this.props.kid.parents && this.props.kid.parents.map(parent =>
              <div key={parent.id} >
                <h3>{parent.name && parent.name}</h3>
@@ -93,6 +92,14 @@ class ParentsList extends React.Component {
                <Button circular onClick={() => this.deleteParent(parent.email)} icon='trash alternate outline' />
              </div>
            )}
+           <Button circular onClick={this.showParentForm} >
+            Add a parent
+           </Button>
+           <Link to={`/kids/${this.props.kid.id}`}>
+             <Button circular >
+            Cancel
+             </Button>
+           </Link>
            {this.state.showParentForm &&
            <Form className='add-parent-form'>
              <Form.Field>
@@ -126,7 +133,7 @@ class ParentsList extends React.Component {
              <Button onClick={this.cancelParentForm}>Cancel</Button>
            </Form>
            }
-           
+
            {/* {this.state.naps && this.state.naps.map(nap =>
             <
               changeNapStartTime={this.changeNapStartTime}

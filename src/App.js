@@ -122,7 +122,6 @@ class App extends Component {
   handleSidebarHide = () => this.setState({ sidebarVisible: false })
 
   sidebarButtons () {
-
     const pageURL = window.location.href
     const titleURL = require('./images/logo2.png')
 
@@ -149,10 +148,16 @@ class App extends Component {
             <Link to={'/kids'}>
               <Menu.Item onClick={this.handleSidebarHide}>Home</Menu.Item>
             </Link>
-            <Link to={`/kids/${this.state.selectedKid}/edit`}>
-              <Menu.Item >Change child details</Menu.Item>
-            </Link>
-            <Menu.Item as='a'>Parents</Menu.Item>
+            {this.state.currentUser.childminder &&
+            <>
+              <Link to={`/kids/${this.state.selectedKid}/edit`}>
+                <Menu.Item onClick={this.handleSidebarHide}>Change child details</Menu.Item>
+              </Link>
+              <Link to={`/kids/${this.state.selectedKid}/parents`}>
+                <Menu.Item onClick={this.handleSidebarHide}>Parents</Menu.Item>
+              </Link>
+            </>
+            }
             <Menu.Item as='a' onClick={this.logoutUser}>Log out</Menu.Item>
           </div>
         )

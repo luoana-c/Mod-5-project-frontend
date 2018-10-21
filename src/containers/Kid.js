@@ -361,12 +361,12 @@ class Kid extends React.Component {
             maxDate={moment()}
             placeholderText='Select a weekday'
           />
-          {this.props.currentUser.childminder &&
+          {/* {this.props.currentUser.childminder &&
             <Link to={`/kids/${this.props.kid.id}/edit`}><Button>Edit child info</Button></Link>
           }
           {this.props.currentUser.childminder &&
             <Link to={`/kids/${this.props.kid.id}/parents`}><Button>Parents</Button></Link>
-          }
+          } */}
 
           <Grid verticalAlign='middle' centered columns={2}>
             <Grid.Column className='kid-pic'width={3}>

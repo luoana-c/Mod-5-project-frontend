@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Label } from 'semantic-ui-react'
+import { Form, Label, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -56,6 +56,11 @@ class KidEditForm extends React.Component {
           </Form.Group>
           <Link to='/kids'>
             <Form.Button onClick={() => this.props.editKid(this.props.kid.id, this.state.firstName, this.state.lastName, this.state.genderValue, this.state.startDate)}>Save child</Form.Button>
+          </Link>
+          <Link to={`/kids/${this.props.kid.id}`}>
+            <Button circular >
+            Cancel
+            </Button>
           </Link>
         </Form>
       )
