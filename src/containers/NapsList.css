@@ -27,6 +27,10 @@
     width: 80px;
 }
 
+div.nap-time .react-datepicker__input-container input {
+    width: 50px;
+}
+
 /* .start-time {
     width: 70px;
 } */
@@ -63,3 +67,16 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #914f37;
 } */
+
+
+div.content div.napGrid {
+	width: 100% !important;
+}
+
+div.content div.napGrid .napRow {
+	padding-bottom: 5px;
+}
+
+div.content div.napGrid .column p.timeLabel {
+	margin-top: 10px;
+}

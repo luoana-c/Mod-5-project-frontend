@@ -33,7 +33,7 @@ class NappyPotty extends React.Component {
 
     return (
       <Grid centered verticalAlign='middle' align>
-        <Grid.Row centeredcolumns={2}>
+        <Grid.Row columns={2}>
           <Grid.Column >
             <Image className='elem-icon' alt='' src={nappyURL} height='50' width='50' />
           </Grid.Column>

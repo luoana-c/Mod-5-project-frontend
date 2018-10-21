@@ -19,7 +19,6 @@ class Nap extends React.Component {
       if (this.props.currentUser.childminder) {
         return (
           <DatePicker
-
             selected={this.state.startDate}
             selectsStart
             startDate={this.state.startDate}
@@ -82,9 +81,9 @@ class Nap extends React.Component {
       const duration = this.props.nap.end && moment(+diff).format('H:mm')
       return (
         <>
-          <Grid verticalAlign='middle' >
-            <Grid.Row columns={4} className='nap'>
-              <Grid.Column >
+          <Grid verticalAlign='top' className='napGrid' columns={4}>
+            <Grid.Row className='napRow'>
+              <Grid.Column>
 
                 {(moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) &&
                   this.props.currentUser.childminder &&
@@ -95,14 +94,14 @@ class Nap extends React.Component {
                   } icon='play'
                   />
                 }
-                
-                {this.state.showStartNapPicker && this.startNapPicker()}
-                
-                <p className='start-time'> {this.props.nap.start && `Start time: ${moment(this.props.nap.start).format('HH:mm')}`}</p>
+                <div className='nap-time'>
+                  {this.state.showStartNapPicker && this.startNapPicker()}
+                </div>
+
+                <p className='timeLabel'> {this.props.nap.start && `${moment(this.props.nap.start).format('HH:mm')}`}</p>
 
               </Grid.Column>
-              <Divider vertical />
-              <Grid.Column >
+              <Grid.Column>
                 {(moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) &&
             this.props.currentUser.childminder &&
             <Button circular onClick={() =>
@@ -110,19 +109,19 @@ class Nap extends React.Component {
                 .then(this.setState({ endDate: moment(), showEndNapPicker: true }))
             } icon='stop' />
                 }
-                {this.state.showEndNapPicker && this.endNapPicker()}
-                <p>{this.props.nap.end && `End time: ${moment(this.props.nap.end).format('HH:mm')}` }</p>
+                <div className='nap-time'>
+                  {this.state.showEndNapPicker && this.endNapPicker()}
+                </div>
+                <p className='timeLabel'>{this.props.nap.end && `${moment(this.props.nap.end).format('HH:mm')}` }</p>
 
               </Grid.Column>
-              <Divider vertical />
-              <Grid.Column >
+              <Grid.Column>
                 <div>
                   <h3 className='duration'>{this.props.nap.duration && `Duration: ${this.props.nap.duration}` }</h3>
                   {/* <h3>{this.props.nap.end && `Duration: ${duration}` }</h3> */}
                 </div>
               </Grid.Column>
-              <Divider vertical />
-              <Grid.Column >
+              <Grid.Column>
                 <div>
                   {this.props.currentUser.childminder &&
                   <Button circular onClick={() => this.props.deleteNap(this.props.nap)} icon='trash alternate outline' />
