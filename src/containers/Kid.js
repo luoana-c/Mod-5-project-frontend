@@ -422,7 +422,7 @@ class Kid extends React.Component {
 
                     <Grid.Column >
                       {this.props.currentUser.childminder &&
-                      <Button circular onClick={this.addFood}>
+                      <Button className='square-full' onClick={this.addFood}>
                   Add food
                       </Button>
                       }

@@ -172,7 +172,7 @@ class NapsList extends React.Component {
 
              <Grid.Column >
                {this.props.currentUser.childminder &&
-               <Button circular onClick={this.addNap} >
+               <Button className='square-full'  onClick={this.addNap} >
               Add nap
                </Button>
                }

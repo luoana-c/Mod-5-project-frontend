@@ -72,12 +72,19 @@ div.ui.secondary.my-top-menu.menu {
   width: 10vw;
   height:3vh;
 }
-
+div.ui.secondary.my-top-menu.menu .menu-welcome {
+  background: #FADCD1;
+  height: 3vh;
+  font-family: 'Mali', regular;
+  font-weight: bold;
+  text-align: center;
+  padding-left: 12vw;
+}
 div.item.menu-welcome {
   width: 90vw;
   height:3vh;
   align-items: center;
-  text-align: center;
+  
 }
 
 /* ---------- KIDS LIST ---------- */
@@ -140,3 +147,26 @@ a {
   font-weight: 700;
   text-transform: none;
 }
+
+.parents-title {
+  background-color: white;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  margin-bottom: 3vh;
+}
+
+.no-parents {
+  padding-bottom: 3vh;
+}
+
+/* ---------- BUTTONS ---------- */
+
+button.ui.button.square-full {
+  background-color: #5BC1A5 !important;
+	color: white !important;
+	font-weight: bold !important;
+  font-size: 2.25vh;
+  padding: 0.6em 1.25em;
+}
+
+

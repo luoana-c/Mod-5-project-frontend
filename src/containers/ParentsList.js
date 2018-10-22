@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Label, Input } from 'semantic-ui-react'
+import { Button, Form, Label, Input, Grid, Segment } from 'semantic-ui-react'
 import API from '../API'
 import { Link } from 'react-router-dom'
 
@@ -82,56 +82,80 @@ class ParentsList extends React.Component {
            <span style={{ fontWeight: 'bold', fontSize: '20px' }}>
              {this.props.kid.first_name} {this.props.kid.last_name}
            </span> */}
+           <div className='parents-title'>
+             <h2>{this.props.kid.first_name}'s Parents</h2>
+           </div>
 
            {this.props.kid.parents && this.props.kid.parents.map(parent =>
+
              <div key={parent.id} >
+
                <h3>{parent.name && parent.name}</h3>
                <p>Email: {parent.email}</p>
                <p>{parent.phone_number && `Phone: ${parent.phone_number}`}</p>
                <p>{parent.address && `Address: ${parent.address}`}</p>
-               <Button circular onClick={() => this.deleteParent(parent.email)} icon='trash alternate outline' />
+
+               <Button className='my-delete-buttons' circular onClick={() => this.deleteParent(parent.email)} icon='trash alternate outline' />
+               <br />
+               <br />
              </div>
            )}
-           <Button circular onClick={this.showParentForm} >
+
+           {this.props.kid.parents.length < 1 &&
+           <div className='no-parents'>
+             <h3>There are no parents</h3>
+             <h3>Click on the button to add a parent</h3>
+           </div>
+           }
+
+           <Button className='square-full' onClick={this.showParentForm} >
             Add a parent
            </Button>
            <Link to={`/kids/${this.props.kid.id}`}>
-             <Button circular >
-            Cancel
+             <Button className='square-full' >
+            Go back to child details
              </Button>
            </Link>
            {this.state.showParentForm &&
-           <Form className='add-parent-form'>
-             <Form.Field>
-               <Label>Enter parent's full name</Label>
-               <Input name='name' value={this.state.name} placeholder='Full name' onChange={this.handleChange} />
-             </Form.Field>
-             <Form.Field>
-               <Label>Enter parent's phone number</Label>
-               <Input name='phoneNumber' value={this.state.phoneNumber} placeholder='Phone number' onChange={this.handleChange} />
-             </Form.Field>
-             <Form.Field>
-               <Label>Enter parent's address</Label>
-               <Input name='address' value={this.state.address} placeholder='Address' onChange={this.handleChange} />
-             </Form.Field>
-             <br />
-             <Form.Field>
-               <Label>Enter an email</Label>
-               <Input name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />
-             </Form.Field>
-             <Form.Field>
-               <Label>Create a password</Label>
-               <Input name='password' value={this.state.password} type='password' placeholder='Password' onChange={this.handleChange} />
-             </Form.Field>
+           <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+             <Grid.Column style={{ maxWidth: 450 }}>
+               <Form className='add-parent-form'>
+                 <Segment stacked>
+                   <Form.Field>
+                     {/* <Label>Enter parent's full name</Label> */}
+                     <Form.Input fluid icon='user' iconPosition='left' name='name' value={this.state.name} placeholder='Full name' onChange={this.handleChange} />
+                   </Form.Field>
+                   <Form.Field>
+                     {/* <Label>Enter parent's phone number</Label> */}
+                     <Form.Input fluid icon='phone' iconPosition='left' name='phoneNumber' value={this.state.phoneNumber} placeholder='Phone number' onChange={this.handleChange} />
+                   </Form.Field>
+                   <Form.Field>
+                     {/* <Label>Enter parent's address</Label> */}
+                     <Form.Input fluid icon='home' iconPosition='left' name='address' value={this.state.address} placeholder='Address' onChange={this.handleChange} />
+                   </Form.Field>
+                   <br />
+                   <Form.Field>
+                     {/* <Label>Enter an email</Label> */}
+                     <Form.Input fluid icon='mail' iconPosition='left' name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />
+                   </Form.Field>
+                   <Form.Field>
+                     {/* <Label>Create a password</Label> */}
+                     <Form.Input fluid icon='lock' iconPosition='left' name='password' value={this.state.password} type='password' placeholder='Password' onChange={this.handleChange} />
+                   </Form.Field>
+                   <br />
+                   <Button
+                     onClick={(e) =>
+                       this.addParent(this.state.name, this.state.email, this.state.password, this.state.phoneNumber, this.state.address, e)
+                     }
+                     type='submit'
+                   >Create parent</Button>
+                 </Segment>
+               </Form>
+               <br />
+               <Button onClick={this.cancelParentForm}>Cancel</Button>
 
-             <Button
-               onClick={(e) =>
-                 this.addParent(this.state.name, this.state.email, this.state.password, this.state.phoneNumber, this.state.address, e)
-               }
-               type='submit'
-             >Create parent</Button>
-             <Button onClick={this.cancelParentForm}>Cancel</Button>
-           </Form>
+             </Grid.Column>
+           </Grid>
            }
 
            {/* {this.state.naps && this.state.naps.map(nap =>

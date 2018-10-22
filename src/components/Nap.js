@@ -117,14 +117,14 @@ class Nap extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <div>
-                  <h3 className='duration'>{this.props.nap.duration && `Duration ${this.props.nap.duration}` }</h3>
+                  <h3 className='duration'>{this.props.nap.duration && `${this.props.nap.duration}` }</h3>
                   {/* <h3>{this.props.nap.end && `Duration: ${duration}` }</h3> */}
                 </div>
               </Grid.Column>
               <Grid.Column>
                 <div>
                   {this.props.currentUser.childminder &&
-                  <Button circular onClick={() => this.props.deleteNap(this.props.nap)} icon='trash alternate outline' />
+                  <Button className='my-delete-buttons' circular onClick={() => this.props.deleteNap(this.props.nap)} icon='trash alternate outline' />
                   }
                 </div>
               </Grid.Column>

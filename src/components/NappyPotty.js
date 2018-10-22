@@ -41,7 +41,7 @@ class NappyPotty extends React.Component {
 
           <Grid.Column >
             {this.props.currentUser.childminder &&
-            <Button circular onClick={this.addNappyToStateAndAPI} >
+            <Button className='square-full' onClick={this.addNappyToStateAndAPI} >
               Add potty
               <br />
               or nappy
@@ -106,7 +106,7 @@ class NappyPotty extends React.Component {
                   {this.props.nappy.bm_normal > 0 &&
                   <Grid.Row columns={2}>
                     <Grid.Column>
-                      <p className='nappy-numbers'> normal: {this.props.nappy.bm_normal}</p>
+                      <p className='nappy-numbers'> normal {this.props.nappy.bm_normal}</p>
 
                     </Grid.Column>
                     <Grid.Column>
@@ -120,7 +120,7 @@ class NappyPotty extends React.Component {
                   {this.props.nappy.bm_runny > 0 &&
                   <Grid.Row columns={2}>
                     <Grid.Column>
-                      <p className='nappy-numbers'> runny: {this.props.nappy.bm_runny}</p>
+                      <p className='nappy-numbers'> runny {this.props.nappy.bm_runny}</p>
                     </Grid.Column>
                     <Grid.Column>
                       {this.props.currentUser.childminder &&
@@ -133,7 +133,7 @@ class NappyPotty extends React.Component {
                   {this.props.nappy.bm_hard > 0 &&
                   <Grid.Row columns={2}>
                     <Grid.Column>
-                      <p className='nappy-numbers'> hard: {this.props.nappy.bm_hard}</p>
+                      <p className='nappy-numbers'> hard {this.props.nappy.bm_hard}</p>
 
                     </Grid.Column>
                     <Grid.Column>
