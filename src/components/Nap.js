@@ -117,7 +117,7 @@ class Nap extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <div>
-                  <h3 className='duration'>{this.props.nap.duration && `Duration: ${this.props.nap.duration}` }</h3>
+                  <h3 className='duration'>{this.props.nap.duration && `Duration ${this.props.nap.duration}` }</h3>
                   {/* <h3>{this.props.nap.end && `Duration: ${duration}` }</h3> */}
                 </div>
               </Grid.Column>
