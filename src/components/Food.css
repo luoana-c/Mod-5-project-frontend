@@ -1,0 +1,12 @@
+div.content div.foodGrid {
+    width: 100%;
+    margin: 0;
+}
+
+form.ui.form.foodForm {
+    display: inline-flex;
+}
+
+form.ui.form.foodForm div.column {
+    padding-right: 4rw;
+}

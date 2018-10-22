@@ -42,9 +42,9 @@ class NappyPotty extends React.Component {
           <Grid.Column >
             {this.props.currentUser.childminder &&
             <Button circular onClick={this.addNappyToStateAndAPI} >
-              Add nappy
+              Add potty
               <br />
-              potty
+              or nappy
             </Button>
             }
           </Grid.Column>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Grid } from 'semantic-ui-react'
 import moment from 'moment'
 
 class Food extends React.Component {
@@ -83,258 +83,351 @@ class Food extends React.Component {
 
   render () {
     return (
-      <div>
-        
+      <Grid centered verticalAlign='top' align className='pottyGrid'>
+
         {this.props.food &&
-        <div>
-          <Button onClick={this.addBreakfastOptions}>Breakfast:</Button>
-          {this.state.breakfast &&
-            <Form>
-              {/* <Form.Field>
+          <>
+            <Grid.Row columns={1}>
+              <Grid.Column >
+                <Button onClick={this.addBreakfastOptions}>Breakfast:</Button>
+              </Grid.Column>
+            </Grid.Row>
+
+            {this.state.breakfast &&
+            <Grid.Row columns={4}>
+              <Form className='foodForm'>
+                {/* <Form.Field>
                     Selected value: <b>{this.state.breakfastValue}</b>
                 </Form.Field> */}
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='None'
-                  name='checkboxRadioGroup'
-                  value='None'
-                  checked={this.state.breakfastValue === 'None'}
-                  onChange={this.handleChangeBreakfast}
 
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Some'
-                  name='checkboxRadioGroup'
-                  value='Some'
-                  checked={this.state.breakfastValue === 'Some'}
-                  onChange={this.handleChangeBreakfast}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='All'
-                  name='checkboxRadioGroup'
-                  value='All'
-                  checked={this.state.breakfastValue === 'All'}
-                  onChange={this.handleChangeBreakfast}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Extra'
-                  name='checkboxRadioGroup'
-                  value='Extra'
-                  checked={this.state.breakfastValue === 'Extra'}
-                  onChange={this.handleChangeBreakfast}
-                />
-              </Form.Field>
-            </Form>
-          }
-          <Button onClick={this.addAMSnackOptions}>AM Snack:</Button>
-          {this.state.am_snack &&
-            <Form>
-              {/* <Form.Field>
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='None'
+                      name='checkboxRadioGroup'
+                      value='None'
+                      checked={this.state.breakfastValue === 'None'}
+                      onChange={this.handleChangeBreakfast}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Some'
+                      name='checkboxRadioGroup'
+                      value='Some'
+                      checked={this.state.breakfastValue === 'Some'}
+                      onChange={this.handleChangeBreakfast}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='All'
+                      name='checkboxRadioGroup'
+                      value='All'
+                      checked={this.state.breakfastValue === 'All'}
+                      onChange={this.handleChangeBreakfast}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Extra'
+                      name='checkboxRadioGroup'
+                      value='Extra'
+                      checked={this.state.breakfastValue === 'Extra'}
+                      onChange={this.handleChangeBreakfast}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+              </Form>
+            </Grid.Row>
+            }
+            <Grid.Row columns={1}>
+              <Grid.Column >
+                <Button onClick={this.addAMSnackOptions}>AM Snack:</Button>
+              </Grid.Column>
+            </Grid.Row>
+
+            {this.state.am_snack &&
+            <Grid.Row columns={4}>
+              <Form className='foodForm'>
+                {/* <Form.Field>
                     Selected value: <b>{this.state.breakfastValue}</b>
                 </Form.Field> */}
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='None'
-                  name='checkboxRadioGroup'
-                  value='None'
-                  checked={this.state.amSnackValue === 'None'}
-                  onChange={this.handleChangeAMSnack}
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='None'
+                      name='checkboxRadioGroup'
+                      value='None'
+                      checked={this.state.amSnackValue === 'None'}
+                      onChange={this.handleChangeAMSnack}
+                    />
+                  </Form.Field>
+                </Grid.Column>
 
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Some'
-                  name='checkboxRadioGroup'
-                  value='Some'
-                  checked={this.state.amSnackValue === 'Some'}
-                  onChange={this.handleChangeAMSnack}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='All'
-                  name='checkboxRadioGroup'
-                  value='All'
-                  checked={this.state.amSnackValue === 'All'}
-                  onChange={this.handleChangeAMSnack}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Extra'
-                  name='checkboxRadioGroup'
-                  value='Extra'
-                  checked={this.state.amSnackValue === 'Extra'}
-                  onChange={this.handleChangeAMSnack}
-                />
-              </Form.Field>
-            </Form>
-          }
-          <Button onClick={this.addLunchOptions}>Lunch:</Button>
-          {this.state.lunch &&
-            <Form>
-              {/* <Form.Field>
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Some'
+                      name='checkboxRadioGroup'
+                      value='Some'
+                      checked={this.state.amSnackValue === 'Some'}
+                      onChange={this.handleChangeAMSnack}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='All'
+                      name='checkboxRadioGroup'
+                      value='All'
+                      checked={this.state.amSnackValue === 'All'}
+                      onChange={this.handleChangeAMSnack}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Extra'
+                      name='checkboxRadioGroup'
+                      value='Extra'
+                      checked={this.state.amSnackValue === 'Extra'}
+                      onChange={this.handleChangeAMSnack}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+              </Form>
+            </Grid.Row>
+            }
+            <Grid.Row columns={1}>
+              <Grid.Column >
+                <Button onClick={this.addLunchOptions}>Lunch:</Button>
+              </Grid.Column>
+            </Grid.Row>
+
+            {this.state.lunch &&
+            <Grid.Row columns={4}>
+              <Form className='foodForm'>
+                {/* <Form.Field>
                     Selected value: <b>{this.state.breakfastValue}</b>
                 </Form.Field> */}
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='None'
-                  name='checkboxRadioGroup'
-                  value='None'
-                  checked={this.state.lunchValue === 'None'}
-                  onChange={this.handleChangeLunch}
 
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Some'
-                  name='checkboxRadioGroup'
-                  value='Some'
-                  checked={this.state.lunchValue === 'Some'}
-                  onChange={this.handleChangeLunch}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='All'
-                  name='checkboxRadioGroup'
-                  value='All'
-                  checked={this.state.lunchValue === 'All'}
-                  onChange={this.handleChangeLunch}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Extra'
-                  name='checkboxRadioGroup'
-                  value='Extra'
-                  checked={this.state.lunchValue === 'Extra'}
-                  onChange={this.handleChangeLunch}
-                />
-              </Form.Field>
-            </Form>
-          }
-          <Button onClick={this.addPMSnackOptions}>PM Snack:</Button>
-          {this.state.pm_snack &&
-            <Form>
-              {/* <Form.Field>
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='None'
+                      name='checkboxRadioGroup'
+                      value='None'
+                      checked={this.state.lunchValue === 'None'}
+                      onChange={this.handleChangeLunch}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Some'
+                      name='checkboxRadioGroup'
+                      value='Some'
+                      checked={this.state.lunchValue === 'Some'}
+                      onChange={this.handleChangeLunch}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='All'
+                      name='checkboxRadioGroup'
+                      value='All'
+                      checked={this.state.lunchValue === 'All'}
+                      onChange={this.handleChangeLunch}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Extra'
+                      name='checkboxRadioGroup'
+                      value='Extra'
+                      checked={this.state.lunchValue === 'Extra'}
+                      onChange={this.handleChangeLunch}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+              </Form>
+            </Grid.Row>
+            }
+            <Grid.Row columns={1}>
+              <Grid.Column >
+                <Button onClick={this.addPMSnackOptions}>PM Snack:</Button>
+              </Grid.Column>
+            </Grid.Row>
+
+            {this.state.pm_snack &&
+            <Grid.Row columns={4}>
+              <Form className='foodForm'>
+                {/* <Form.Field>
                     Selected value: <b>{this.state.breakfastValue}</b>
                 </Form.Field> */}
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='None'
-                  name='checkboxRadioGroup'
-                  value='None'
-                  checked={this.state.pmSnackValue === 'None'}
-                  onChange={this.handleChangePMSnack}
 
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Some'
-                  name='checkboxRadioGroup'
-                  value='Some'
-                  checked={this.state.pmSnackValue === 'Some'}
-                  onChange={this.handleChangePMSnack}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='All'
-                  name='checkboxRadioGroup'
-                  value='All'
-                  checked={this.state.pmSnackValue === 'All'}
-                  onChange={this.handleChangePMSnack}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Extra'
-                  name='checkboxRadioGroup'
-                  value='Extra'
-                  checked={this.state.pmSnackValue === 'Extra'}
-                  onChange={this.handleChangePMSnack}
-                />
-              </Form.Field>
-            </Form>
-          }
-          <Button onClick={this.addDinnerTeaOptions}>Dinner/Tea:</Button>
-          {this.state.dinner_tea &&
-            <Form>
-              {/* <Form.Field>
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='None'
+                      name='checkboxRadioGroup'
+                      value='None'
+                      checked={this.state.pmSnackValue === 'None'}
+                      onChange={this.handleChangePMSnack}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Some'
+                      name='checkboxRadioGroup'
+                      value='Some'
+                      checked={this.state.pmSnackValue === 'Some'}
+                      onChange={this.handleChangePMSnack}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='All'
+                      name='checkboxRadioGroup'
+                      value='All'
+                      checked={this.state.pmSnackValue === 'All'}
+                      onChange={this.handleChangePMSnack}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Extra'
+                      name='checkboxRadioGroup'
+                      value='Extra'
+                      checked={this.state.pmSnackValue === 'Extra'}
+                      onChange={this.handleChangePMSnack}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+              </Form>
+            </Grid.Row>
+            }
+            <Grid.Row columns={1}>
+              <Grid.Column >
+                <Button onClick={this.addDinnerTeaOptions}>Dinner/Tea:</Button>
+              </Grid.Column>
+            </Grid.Row>
+
+            {this.state.dinner_tea &&
+            <Grid.Row columns={4}>
+              <Form className='foodForm'>
+                {/* <Form.Field>
                     Selected value: <b>{this.state.breakfastValue}</b>
                 </Form.Field> */}
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='None'
-                  name='checkboxRadioGroup'
-                  value='None'
-                  checked={this.state.dinnerTeaValue === 'None'}
-                  onChange={this.handleChangeDinnerTea}
 
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Some'
-                  name='checkboxRadioGroup'
-                  value='Some'
-                  checked={this.state.dinnerTeaValue === 'Some'}
-                  onChange={this.handleChangeDinnerTea}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='All'
-                  name='checkboxRadioGroup'
-                  value='All'
-                  checked={this.state.dinnerTeaValue === 'All'}
-                  onChange={this.handleChangeDinnerTea}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  label='Extra'
-                  name='checkboxRadioGroup'
-                  value='Extra'
-                  checked={this.state.dinnerTeaValue === 'Extra'}
-                  onChange={this.handleChangeDinnerTea}
-                />
-              </Form.Field>
-            </Form>
-          }
-        </div>
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='None'
+                      name='checkboxRadioGroup'
+                      value='None'
+                      checked={this.state.dinnerTeaValue === 'None'}
+                      onChange={this.handleChangeDinnerTea}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Some'
+                      name='checkboxRadioGroup'
+                      value='Some'
+                      checked={this.state.dinnerTeaValue === 'Some'}
+                      onChange={this.handleChangeDinnerTea}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='All'
+                      name='checkboxRadioGroup'
+                      value='All'
+                      checked={this.state.dinnerTeaValue === 'All'}
+                      onChange={this.handleChangeDinnerTea}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+                <Grid.Column >
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      label='Extra'
+                      name='checkboxRadioGroup'
+                      value='Extra'
+                      checked={this.state.dinnerTeaValue === 'Extra'}
+                      onChange={this.handleChangeDinnerTea}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+
+              </Form>
+            </Grid.Row>
+            }
+          </>
         }
-      </div>
+      </Grid>
     )
   }
 }

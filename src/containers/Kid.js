@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css'
+import '../components/Food.css'
 
 import API from '../API'
 import NapsList from './NapsList'
@@ -413,7 +414,7 @@ class Kid extends React.Component {
               </div>
               <div className='item-list'>
 
-                <Grid centered verticalAlign='middle' align>
+                <Grid centered verticalAlign='top' align className='foodGrid' >
                   <Grid.Row columns={2}>
                     <Grid.Column >
                       <Image className='elem-icon' alt='' src={foodURL} height='50' width='50' />
