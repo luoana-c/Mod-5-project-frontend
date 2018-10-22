@@ -118,6 +118,17 @@ class App extends Component {
       sidebarVisible: !this.state.sidebarVisible
     })
   }
+  linkToKidEdit = () => {
+    this.state.currentUser && this.state.currentUser.childminder &&
+    this.props.history.push(`/kids/${this.state.selectedKid}/edit`)
+    this.handleSidebarHide()
+  }
+
+  linkToKidParents = () => {
+    this.state.currentUser && this.state.currentUser.childminder &&
+    this.props.history.push(`/kids/${this.state.selectedKid}/parents`)
+    this.handleSidebarHide()
+  }
 
   handleSidebarHide = () => this.setState({ sidebarVisible: false })
 
@@ -151,12 +162,15 @@ class App extends Component {
             {this.state.currentUser &&
               this.state.currentUser.childminder &&
             <>
-              <Link to={`/kids/${this.state.selectedKid}/edit`}>
-                <Menu.Item onClick={this.handleSidebarHide}>Change child details</Menu.Item>
-              </Link>
-              <Link to={`/kids/${this.state.selectedKid}/parents`}>
-                <Menu.Item onClick={this.handleSidebarHide}>Parents</Menu.Item>
-              </Link>
+              {/* <Link to={`/kids/${this.state.selectedKid}/edit`}> */}
+                <Menu.Item onClick={this.linkToKidEdit}>Change child details</Menu.Item>
+              {/* </Link> */}
+              {/* <div> */}
+              {/* <Link to={`/kids/${this.state.selectedKid}/parents`}> */}
+                <Menu.Item onClick={this.linkToKidParents}>Parents</Menu.Item>
+                {/* </Link> */}
+              
+              {/* </div> */}
             </>
             }
             <Menu.Item as='a' onClick={this.logoutUser}>Log out</Menu.Item>

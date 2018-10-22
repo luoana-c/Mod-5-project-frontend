@@ -89,7 +89,7 @@ div.item.menu-welcome {
 }
 
 .kid-list {
-  padding-top: 10vh;
+  padding-top: 1.5vh;
 }
 
 p {
@@ -129,4 +129,14 @@ a {
 
 .signup {
   border-bottom: 2px solid #5BC1A5;
+}
+
+.ui.label {
+  background-color: white;
+  display: block;
+  margin: 0 0 .28571429rem 0;
+  color: rgba(0,0,0,.87);
+  font-size: .92857143em;
+  font-weight: 700;
+  text-transform: none;
 }

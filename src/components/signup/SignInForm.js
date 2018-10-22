@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment, Label } from 'semantic-ui-react'
+import { Button, Form, Grid, Image, Segment } from 'semantic-ui-react'
 import API from '../../API'
 import { withRouter, Link } from 'react-router-dom'
 
@@ -41,6 +41,7 @@ class SignInForm extends Component {
         height: 100%;
       }
     `}</style>
+
         <div className='logo-on-forms'>
           <Image src={titleURL} className='logo-image' />
         </div>
@@ -52,7 +53,7 @@ class SignInForm extends Component {
             </h3>
             <Form size='medium' className='signin-form'>
               <Segment stacked>
-                <Form.Input fluid icon='user' iconPosition='left' name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />
+                <Form.Input fluid icon='mail' iconPosition='left' name='email' value={this.state.email} placeholder='Email' onChange={this.handleChange} />
                 <Form.Input fluid icon='lock' iconPosition='left' name='password' value={this.state.password} type='password' placeholder='Password' onChange={this.handleChange} />
 
                 <Button fluid size='medium' onClick={() => this.handleClickOnSignIn()} type='submit'>Sign In</Button>
