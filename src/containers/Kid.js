@@ -385,11 +385,9 @@ class Kid extends React.Component {
             </Grid.Column>
           </Grid>
 
-          {this.props.currentUser.childminder &&
-            <Button className='myButton' toggle active={this.state.presence} onClick={this.togglePresence}>
-              {this.state.presence ? 'Mark as absent' : 'Mark as present'}
-            </Button>
-          }
+          <Button className='myButton' toggle active={this.state.presence} onClick={this.props.currentUser.childminder && this.togglePresence}>
+            {this.state.presence ? 'Present' : 'Not present'}
+          </Button>
 
           {this.state.presence &&
             <div>

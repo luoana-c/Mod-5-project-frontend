@@ -86,10 +86,10 @@ class Food extends React.Component {
       <Grid centered verticalAlign='top' align className='pottyGrid'>
 
         {this.props.food &&
-          <>
+          <>        
             <Grid.Row columns={1}>
               <Grid.Column >
-                <Button onClick={this.addBreakfastOptions}>Breakfast:</Button>
+                <Button className='m-snack-button' onClick={this.props.currentUser.childminder && this.addBreakfastOptions}>Breakfast:</Button>
               </Grid.Column>
             </Grid.Row>
 
@@ -108,7 +108,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='None'
                       checked={this.state.breakfastValue === 'None'}
-                      onChange={this.handleChangeBreakfast}
+                      onChange={this.props.currentUser.childminder && this.handleChangeBreakfast}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -121,7 +121,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Some'
                       checked={this.state.breakfastValue === 'Some'}
-                      onChange={this.handleChangeBreakfast}
+                      onChange={this.props.currentUser.childminder && this.handleChangeBreakfast}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -134,7 +134,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='All'
                       checked={this.state.breakfastValue === 'All'}
-                      onChange={this.handleChangeBreakfast}
+                      onChange={this.props.currentUser.childminder && this.handleChangeBreakfast}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -147,7 +147,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Extra'
                       checked={this.state.breakfastValue === 'Extra'}
-                      onChange={this.handleChangeBreakfast}
+                      onChange={this.props.currentUser.childminder && this.handleChangeBreakfast}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -157,7 +157,7 @@ class Food extends React.Component {
             }
             <Grid.Row columns={1}>
               <Grid.Column >
-                <Button onClick={this.addAMSnackOptions}>AM Snack:</Button>
+                <Button className='m-snack-button' onClick={this.props.currentUser.childminder && this.addAMSnackOptions}>AM Snack:</Button>
               </Grid.Column>
             </Grid.Row>
 
@@ -175,7 +175,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='None'
                       checked={this.state.amSnackValue === 'None'}
-                      onChange={this.handleChangeAMSnack}
+                      onChange={this.props.currentUser.childminder && this.handleChangeAMSnack}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -188,7 +188,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Some'
                       checked={this.state.amSnackValue === 'Some'}
-                      onChange={this.handleChangeAMSnack}
+                      onChange={this.props.currentUser.childminder && this.handleChangeAMSnack}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -201,7 +201,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='All'
                       checked={this.state.amSnackValue === 'All'}
-                      onChange={this.handleChangeAMSnack}
+                      onChange={this.props.currentUser.childminder && this.handleChangeAMSnack}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -214,7 +214,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Extra'
                       checked={this.state.amSnackValue === 'Extra'}
-                      onChange={this.handleChangeAMSnack}
+                      onChange={this.props.currentUser.childminder && this.handleChangeAMSnack}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -223,7 +223,7 @@ class Food extends React.Component {
             }
             <Grid.Row columns={1}>
               <Grid.Column >
-                <Button onClick={this.addLunchOptions}>Lunch:</Button>
+                <Button className='lunch-button' onClick={this.props.currentUser.childminder && this.addLunchOptions}>  Lunch:  </Button>
               </Grid.Column>
             </Grid.Row>
 
@@ -242,7 +242,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='None'
                       checked={this.state.lunchValue === 'None'}
-                      onChange={this.handleChangeLunch}
+                      onChange={this.props.currentUser.childminder && this.handleChangeLunch}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -255,7 +255,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Some'
                       checked={this.state.lunchValue === 'Some'}
-                      onChange={this.handleChangeLunch}
+                      onChange={this.props.currentUser.childminder && this.handleChangeLunch}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -268,7 +268,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='All'
                       checked={this.state.lunchValue === 'All'}
-                      onChange={this.handleChangeLunch}
+                      onChange={this.props.currentUser.childminder && this.handleChangeLunch}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -281,7 +281,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Extra'
                       checked={this.state.lunchValue === 'Extra'}
-                      onChange={this.handleChangeLunch}
+                      onChange={this.props.currentUser.childminder && this.handleChangeLunch}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -291,7 +291,7 @@ class Food extends React.Component {
             }
             <Grid.Row columns={1}>
               <Grid.Column >
-                <Button onClick={this.addPMSnackOptions}>PM Snack:</Button>
+                <Button className='m-snack-button' onClick={this.props.currentUser.childminder && this.addPMSnackOptions}>PM Snack:</Button>
               </Grid.Column>
             </Grid.Row>
 
@@ -310,7 +310,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='None'
                       checked={this.state.pmSnackValue === 'None'}
-                      onChange={this.handleChangePMSnack}
+                      onChange={this.props.currentUser.childminder && this.handleChangePMSnack}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -323,7 +323,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Some'
                       checked={this.state.pmSnackValue === 'Some'}
-                      onChange={this.handleChangePMSnack}
+                      onChange={this.props.currentUser.childminder && this.handleChangePMSnack}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -336,7 +336,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='All'
                       checked={this.state.pmSnackValue === 'All'}
-                      onChange={this.handleChangePMSnack}
+                      onChange={this.props.currentUser.childminder && this.handleChangePMSnack}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -349,7 +349,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Extra'
                       checked={this.state.pmSnackValue === 'Extra'}
-                      onChange={this.handleChangePMSnack}
+                      onChange={this.props.currentUser.childminder && this.handleChangePMSnack}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -359,7 +359,7 @@ class Food extends React.Component {
             }
             <Grid.Row columns={1}>
               <Grid.Column >
-                <Button onClick={this.addDinnerTeaOptions}>Dinner/Tea:</Button>
+                <Button onClick={this.props.currentUser.childminder && this.addDinnerTeaOptions}>Dinner/Tea:</Button>
               </Grid.Column>
             </Grid.Row>
 
@@ -378,7 +378,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='None'
                       checked={this.state.dinnerTeaValue === 'None'}
-                      onChange={this.handleChangeDinnerTea}
+                      onChange={this.props.currentUser.childminder && this.handleChangeDinnerTea}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -391,7 +391,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Some'
                       checked={this.state.dinnerTeaValue === 'Some'}
-                      onChange={this.handleChangeDinnerTea}
+                      onChange={this.props.currentUser.childminder && this.handleChangeDinnerTea}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -404,7 +404,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='All'
                       checked={this.state.dinnerTeaValue === 'All'}
-                      onChange={this.handleChangeDinnerTea}
+                      onChange={this.props.currentUser.childminder && this.handleChangeDinnerTea}
                     />
                   </Form.Field>
                 </Grid.Column>
@@ -417,7 +417,7 @@ class Food extends React.Component {
                       name='checkboxRadioGroup'
                       value='Extra'
                       checked={this.state.dinnerTeaValue === 'Extra'}
-                      onChange={this.handleChangeDinnerTea}
+                      onChange={this.props.currentUser.childminder && this.handleChangeDinnerTea}
                     />
                   </Form.Field>
                 </Grid.Column>

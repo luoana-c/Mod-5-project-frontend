@@ -143,9 +143,12 @@ class App extends Component {
             <div className='side-menu-title-div'>
               <Image src={titleURL} />
             </div>
-            <Link to='/new'>
-              <Menu.Item as='a'onClick={this.handleSidebarHide}>Add a new child</Menu.Item>
-            </Link>
+            {this.state.currentUser &&
+              this.state.currentUser.childminder &&
+              <Link to='/new'>
+                <Menu.Item as='a'onClick={this.handleSidebarHide}>Add a new child</Menu.Item>
+              </Link>
+            }
             <Menu.Item as='a' onClick={this.logoutUser}>Log out</Menu.Item>
           </div>
         )
@@ -163,13 +166,13 @@ class App extends Component {
               this.state.currentUser.childminder &&
             <>
               {/* <Link to={`/kids/${this.state.selectedKid}/edit`}> */}
-                <Menu.Item onClick={this.linkToKidEdit}>Change child details</Menu.Item>
+              <Menu.Item onClick={this.linkToKidEdit}>Change child details</Menu.Item>
               {/* </Link> */}
               {/* <div> */}
               {/* <Link to={`/kids/${this.state.selectedKid}/parents`}> */}
-                <Menu.Item onClick={this.linkToKidParents}>Parents</Menu.Item>
+              <Menu.Item onClick={this.linkToKidParents}>Parents</Menu.Item>
                 {/* </Link> */}
-              
+
               {/* </div> */}
             </>
             }
@@ -214,7 +217,7 @@ class App extends Component {
               {/* <BrowserRouter> */}
 
               <Switch>
-                <Route exact path='/kids' component={props => this.state.currentUser ? this.state.currentUser.childminder ? <KidsList kids={this.state.kids} {...props} /> : <ParentsKidsList kids={this.state.kids} {...props} /> : <SignInPage handleUser={this.handleUser} {...props} /> } />
+                <Route exact path='/kids' component={props => this.state.currentUser ? this.state.currentUser.childminder ? <KidsList kids={this.state.kids} {...props} /> : <ParentsKidsList kids={this.state.kids} {...props} /> : <SignInPage handleUser={this.handleUser} {...props} />} />
                 <Route path='/kids/:id/edit' component={props => this.state.kids.length > 0 ? <KidEditForm editKid={this.editKid} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
                 <Route path='/kids/:id/parents' component={props => this.state.kids.length > 0 ? <ParentsList editKid={this.editKidInState} kid={this.selectKid(props.match.params.id)} {...props} /> : <Loading />} />
                 <Route path='/kids/:id' render={props => this.state.kids.length > 0 ? <Kid setSelectedKid={this.setSelectedKid} kid={this.selectKid(props.match.params.id)} currentUser={this.state.currentUser} {...props} /> : <Loading />} />

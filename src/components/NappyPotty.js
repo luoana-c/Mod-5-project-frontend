@@ -61,15 +61,12 @@ class NappyPotty extends React.Component {
                       <p className='nappy-names'>Wet</p>
                       <p className='wet nappy-numbers'>{this.props.nappy.wet && this.props.nappy.wet }</p>
                     </Grid.Column>
-                    <Grid.Column textAlign='center'>
-                      {this.props.currentUser.childminder &&
-                      <Button circular icon='add' onClick={this.props.addNappyWet} />
-                      }
-                      {this.props.currentUser.childminder &&
-                      <Button className='wet minus-buttons' circular icon='minus' onClick={this.props.removeNappyWet} />
-                      }
 
+                    <Grid.Column textAlign='center'>
+                      <Button circular icon='add' onClick={this.props.currentUser.childminder && this.props.addNappyWet} />
+                      <Button className='wet minus-buttons' circular icon='minus' onClick={this.props.currentUser.childminder && this.props.removeNappyWet} />
                     </Grid.Column>
+
                   </Grid.Row>
                 </Grid>
               </Grid.Column>
@@ -80,27 +77,27 @@ class NappyPotty extends React.Component {
                     <Grid.Column>
                       <p className='nappy-names'>BM </p>
                     </Grid.Column>
+
                     <Grid.Column>
-                      {this.props.currentUser.childminder &&
-                      <Button circular icon='add' onClick={this.showDropdownButton} />
-                      }
+                      <Button circular icon='add' onClick={this.props.currentUser.childminder && this.showDropdownButton} />
                     </Grid.Column>
+
                   </Grid.Row>
                 </Grid>
                 <Grid centered verticalAlign='top' align className='pottyType'>
                   {this.props.currentUser.childminder &&
-            this.state.showDropdown &&
-            <Grid.Row columns={1}>
-              <Grid.Column>
-                <Dropdown item text='select type'>
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => this.hideDropdownButton('normal')}>normal</Dropdown.Item>
-                    <DropdownItem onClick={() => this.hideDropdownButton('runny')}>runny</DropdownItem>
-                    <DropdownItem onClick={() => this.hideDropdownButton('hard')}>hard</DropdownItem>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Grid.Column>
-            </Grid.Row>
+                    this.state.showDropdown &&
+                    <Grid.Row columns={1}>
+                      <Grid.Column>
+                        <Dropdown item text='select type'>
+                          <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => this.hideDropdownButton('normal')}>normal</Dropdown.Item>
+                            <DropdownItem onClick={() => this.hideDropdownButton('runny')}>runny</DropdownItem>
+                            <DropdownItem onClick={() => this.hideDropdownButton('hard')}>hard</DropdownItem>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </Grid.Column>
+                    </Grid.Row>
                   }
 
                   {this.props.nappy.bm_normal > 0 &&
@@ -110,10 +107,7 @@ class NappyPotty extends React.Component {
 
                     </Grid.Column>
                     <Grid.Column>
-                      {this.props.currentUser.childminder &&
-                        <Button className='minus-buttons' circular icon='minus' onClick={() => this.props.removeNappyBM('normal')} />
-                      }
-
+                      <Button className='minus-buttons' circular icon='minus' onClick={() => this.props.currentUser.childminder && this.props.removeNappyBM('normal')} />
                     </Grid.Column>
                   </Grid.Row>
                   }
@@ -123,24 +117,20 @@ class NappyPotty extends React.Component {
                       <p className='nappy-numbers'> runny {this.props.nappy.bm_runny}</p>
                     </Grid.Column>
                     <Grid.Column>
-                      {this.props.currentUser.childminder &&
-                        <Button className='minus-buttons' circular icon='minus' onClick={() => this.props.removeNappyBM('runny')} />
-                      }
-
+                      <Button className='minus-buttons' circular icon='minus' onClick={() => this.props.currentUser.childminder && this.props.removeNappyBM('runny')} />
                     </Grid.Column>
+
                   </Grid.Row>
                   }
+
                   {this.props.nappy.bm_hard > 0 &&
                   <Grid.Row columns={2}>
                     <Grid.Column>
                       <p className='nappy-numbers'> hard {this.props.nappy.bm_hard}</p>
-
                     </Grid.Column>
-                    <Grid.Column>
-                      {this.props.currentUser.childminder &&
-                        <Button className='minus-buttons' circular icon='minus' onClick={() => this.props.removeNappyBM('hard')} />
-                      }
 
+                    <Grid.Column>
+                      <Button className='minus-buttons' circular icon='minus' onClick={() => this.props.currentUser.childminder && this.props.removeNappyBM('hard')} />
                     </Grid.Column>
                   </Grid.Row>
                   }

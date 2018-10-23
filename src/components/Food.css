@@ -7,6 +7,14 @@ form.ui.form.foodForm {
     display: inline-flex;
 }
 
-form.ui.form.foodForm div.column {
-    padding-right: 4rw;
+.ui.checkbox input.hidden+label {
+    padding-right: 1.8rem;
+}
+
+button.ui.button.lunch-button {
+    margin-left: 0.8rem;
+}
+
+button.ui.button.m-snack-button {
+    margin-left: 0.3rem;
 }

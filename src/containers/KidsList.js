@@ -10,8 +10,14 @@ const KidsList = (props) => {
       <div className='logo-on-forms'>
         <Image src={titleURL} className='logo-image' />
       </div>
-      <br/>
-      <br/>
+      <br />
+      <br />
+      {props.kids.length < 1 &&
+        <div>
+          <h3>You have no children on your list</h3>
+          <h3>Go to menu > Add a new child</h3>
+        </div>
+      }
 
       { props.kids &&
         props.kids.map((kid) =>

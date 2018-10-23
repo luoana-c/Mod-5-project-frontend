@@ -17,6 +17,7 @@ p.nappy-numbers {
 
 p.nappy-names {
     padding-top: 1vh;
+    font-weight: bold;
 }
 .ui.button.minus-buttons {
     margin-top: 2vh;

@@ -7,8 +7,8 @@ const KidCard = (props) => {
   const fileName = props.kid.gender
   const imageUrl = require(`../images/${fileName}.svg`)
   return (
-    
-      <Link to={`/kids/${props.kid.id}`}>
+
+    <Link to={`/kids/${props.kid.id}`}>
       <Grid verticalAlign='middle' centered columns={2}>
         <Grid.Column className='kid-pic'width={3}>
           <Image
@@ -23,9 +23,9 @@ const KidCard = (props) => {
           <p className='kid-name'>{props.kid.first_name} {props.kid.last_name}</p>
           <p>Age: {props.kid.age_years} year(s) {props.kid.age_months} month(s)</p>
         </Grid.Column>
-        </Grid>
-      </Link>
-    
+      </Grid>
+    </Link>
+
   )
 }
 
