@@ -10,7 +10,7 @@ const KidCard = (props) => {
   return (
 
     <Link to={`/kids/${props.kid.id}`}>
-      <Grid verticalAlign='middle' centered columns={2}>
+      <Grid className='kid-card-in-list' verticalAlign='middle' centered columns={2}>
         <Grid.Column className='kid-pic'width={4}>
           <Image
             id='kid list image'

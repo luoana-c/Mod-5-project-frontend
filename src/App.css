@@ -89,6 +89,11 @@ div.item.menu-welcome {
 
 /* ---------- KIDS LIST ---------- */
 
+.ui.centered.middle.aligned.two.column.grid.kid-card-in-list {
+  padding-bottom: 0.5vh;
+  padding-top: 0.5vh;
+}
+
 .ui.centered.middle.aligned.two.column.grid {
   padding-bottom: 3vh;
   padding-top: 3vh;
