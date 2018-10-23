@@ -53,12 +53,12 @@ class NapsList extends React.Component {
       const newNapArray = this.state.naps.filter(stateNap => stateNap.id !== nap.id)
       this.setState({ naps: newNapArray })
     }
-    // componentDidUpdate (prevProps) {
-    //   // console.log('did update called')
-    //   if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
-    //     this.getNaps()
-    //   }
-    // }
+    componentDidUpdate (prevProps) {
+      // console.log('did update called')
+      if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
+        this.getNaps()
+      }
+    }
 
     getNaps = () => {
       return fetch(API.baseURL + `/kids/${this.props.kid.id}/days/${this.props.day.date}`)
@@ -167,18 +167,18 @@ class NapsList extends React.Component {
 
        return (
          <Grid centered verticalAlign='middle' align className='napsListGrid'>
-           <Grid.Row columns={2}>
+           <Grid.Row columns={1}>
              <Grid.Column >
-               <Image className='elem-icon' alt='' src={cotURL} height='100'width='110' />
+               <Image className='elem-icon' onClick={this.addNap} alt='' src={cotURL} height='100'width='110' />
              </Grid.Column>
 
-             <Grid.Column >
+             {/* <Grid.Column >
                {this.props.currentUser.childminder &&
                <Button className='square-full' onClick={this.addNap} >
               Add nap
                </Button>
                }
-             </Grid.Column>
+             </Grid.Column> */}
            </Grid.Row>
            {this.state.naps && this.state.naps.length > 0 &&
            <Grid.Row columns={1}>

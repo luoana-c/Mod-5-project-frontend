@@ -405,18 +405,18 @@ class Kid extends React.Component {
               <div className='item-list'>
 
                 <Grid centered verticalAlign='top' align className='foodGrid' >
-                  <Grid.Row columns={2}>
+                  <Grid.Row columns={1}>
                     <Grid.Column >
-                      <Image className='elem-icon' alt='' src={foodURL} height='100' width='100' />
+                      <Image className='elem-icon' onClick={this.addFood} alt='' src={foodURL} height='100' width='80' />
                     </Grid.Column>
 
-                    <Grid.Column >
+                    {/* <Grid.Column >
                       {this.props.currentUser.childminder &&
                       <Button className='square-full' onClick={this.addFood}>
                   Add food
                       </Button>
-                      }
-                    </Grid.Column>
+                      } */}
+                    {/* </Grid.Column> */}
                   </Grid.Row>
 
                   {this.state.day.food &&
@@ -440,6 +440,7 @@ class Kid extends React.Component {
                   removeNappyBM={this.removeNappyBM}
                   nappy={this.state.day.nappy_potty}
                   kid={this.props.kid}
+                  day={this.state.day}
                 />
               </div>
 

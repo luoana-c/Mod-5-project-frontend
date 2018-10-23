@@ -5,6 +5,11 @@
     border: 2px solid #FADCD1;
 }
 
+div.one.column.row {
+	margin: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
 
 .four.column.row.nap {
     padding-left: 8px;

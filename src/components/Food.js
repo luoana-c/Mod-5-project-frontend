@@ -16,6 +16,28 @@ class Food extends React.Component {
     dinnerTeaValue: this.props.food.dinner_tea_had
   }
 
+  componentDidUpdate (prevProps) {
+    // console.log('did update called')
+    if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
+      this.refreshStateMethod()
+    }
+  }
+
+  refreshStateMethod = () => {
+    this.setState({
+      breakfast: (!!this.props.food.breakfast_had),
+      am_snack: (!!this.props.food.am_snack_had),
+      lunch: (!!this.props.food.lunch_had),
+      pm_snack: (!!this.props.food.pm_snack_had),
+      dinner_tea: (!!this.props.food.dinner_tea_had),
+      breakfastValue: this.props.food.breakfast_had,
+      amSnackValue: this.props.food.am_snack_had,
+      lunchValue: this.props.food.lunch_had,
+      pmSnackValue: this.props.food.pm_snack_had,
+      dinnerTeaValue: this.props.food.dinner_tea_had
+    })
+  }
+
   addBreakfastOptions = () => {
     if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
       this.setState({ breakfast: true })
