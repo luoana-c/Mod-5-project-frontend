@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Label, Button, Grid, Segment } from 'semantic-ui-react'
+import { Form, Label, Grid, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'

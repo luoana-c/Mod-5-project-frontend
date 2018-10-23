@@ -63,7 +63,7 @@
 /* ---------- TOP MENU ---------- */
 
 div.ui.secondary.my-top-menu.menu {
-  background: #FADCD1;
+  background: #e5a38b;
   height: 3vh;
   font-family: 'Mali', regular;
 }
@@ -73,7 +73,7 @@ div.ui.secondary.my-top-menu.menu {
   height:3vh;
 }
 div.ui.secondary.my-top-menu.menu .menu-welcome {
-  background: #FADCD1;
+  background: #e5a38b;
   height: 3vh;
   font-family: 'Mali', regular;
   font-weight: bold;
@@ -92,12 +92,15 @@ div.item.menu-welcome {
 .ui.centered.middle.aligned.two.column.grid.kid-card-in-list {
   padding-bottom: 0.5vh;
   padding-top: 0.5vh;
+  margin-bottom: 4vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .ui.centered.middle.aligned.two.column.grid {
   padding-bottom: 3vh;
   padding-top: 3vh;
   background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .kid-list {
@@ -126,11 +129,16 @@ a {
 
 .logo-on-forms {
   background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .logo-image {
   width: 60vw;
   margin-left: 18vw;
+}
+
+img.ui.image.logo-image {
+  max-width: 300px;
 }
 
 .sign-in-header {

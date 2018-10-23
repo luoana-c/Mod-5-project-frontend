@@ -14,13 +14,14 @@ class NapsList extends React.Component {
       console.log('component did mount')
       this.getNaps()
 
-      // const channel = this.props.pusher.subscribe('my-channel')
-      // channel.bind('my-event', data => {
-      //   this.addNapToState(JSON.parse(data.message))
-      // })
-      // channel.bind('delete-nap', data => {
-      //   this.deleteNapFromState(JSON.parse(data.message))
-      // })
+      const channel = this.props.pusher.subscribe('my-channel')
+      
+      channel.bind('my-event', data => {
+        this.addNapToState(JSON.parse(data.message))
+      })
+      channel.bind('delete-nap', data => {
+        this.deleteNapFromState(JSON.parse(data.message))
+      })
     }
 
     addNapToState = (nap) => {

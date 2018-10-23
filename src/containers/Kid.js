@@ -42,10 +42,21 @@ class Kid extends React.Component {
       console.log(this.state.startDate.format('YYYY-MM-DD'))
       this.getDay(this.state.startDate)
 
-      // const channel = pusher.subscribe('my-channel')
+      const channel = pusher.subscribe('my-channel')
       // channel.bind('my-event', data => {
       //   this.setState({ day: JSON.parse(data.message) })
       // })
+      ;[
+        'nappy-change',
+        'change-food',
+        'create-food',
+        'nappy-create'
+      ].map(eventName => {
+        channel.bind(eventName, data => {
+          console.log('data.message', data.message)
+          this.setState({ day: JSON.parse(data.message) })
+        })
+      })
 
       this.props.setSelectedKid(this.props.kid.id)
       // this.getDay()

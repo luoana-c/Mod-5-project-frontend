@@ -17,7 +17,7 @@ const ParentsKidsList = (props) => {
         props.kids.map((kid) =>
           <div key={kid.first_name}>
             <KidCard kid={kid} />
-            <Divider />
+            {/* <Divider /> */}
           </div>
         )
       }

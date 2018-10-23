@@ -14,6 +14,10 @@ class NappyPotty extends React.Component {
     if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
       this.refreshStateMethod()
     }
+
+    if (JSON.stringify(prevProps.nappy) !== JSON.stringify(this.props.nappy) && this.props.nappy) {
+      this.refreshStateMethod()
+    }
   }
 
   refreshStateMethod = () => {
@@ -27,12 +31,30 @@ class NappyPotty extends React.Component {
   hideDropdownButton = (type) => {
     this.setState({ showDropdown: false })
     this.props.addNappyBM(type)
+    this.setState({ nappy: this.props.nappy })
   }
 
   addNappyToStateAndAPI = () => {
     this.props.addNappy()
     this.setState({ showNappy: true })
   }
+
+  addNappyWet = () => {
+    this.props.addNappyWet()
+    this.setState({ nappy: this.props.nappy })
+  }
+
+  removeNappyWet = () => {
+    this.props.removeNappyWet()
+    this.setState({ nappy: this.props.nappy })
+  }
+
+
+  removeNappyBM = (type) => {
+    this.props.removeNappyBM(type)
+    this.setState({ nappy: this.props.nappy })
+  }
+    
 
   render () {
     // const nappyURL = require('../images/135028-baby-collection/svg/diaper.svg')
@@ -65,7 +87,7 @@ class NappyPotty extends React.Component {
                   <Grid.Row columns={2}>
                     <Grid.Column textAlign='center'>
                       <p className='nappy-names'>Wet</p>
-                      <p className='wet nappy-numbers'>{this.state.nappy.wet && this.state.nappy.wet }</p>
+                      <p className='wet nappy-numbers'>{this.state.nappy && this.state.nappy.wet && this.state.nappy.wet }</p>
                     </Grid.Column>
 
                     <Grid.Column textAlign='center'>

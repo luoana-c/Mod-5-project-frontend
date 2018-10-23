@@ -148,7 +148,7 @@ class ParentsList extends React.Component {
                        this.addParent(this.state.name, this.state.email, this.state.password, this.state.phoneNumber, this.state.address, e)
                      }
                      type='submit'
-                   >Create parent</Button>
+                   >Add parent</Button>
                  </Segment>
                </Form>
                <br />

@@ -89,7 +89,7 @@ class Nap extends React.Component {
                   (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) &&
                   this.props.currentUser.childminder &&
                     // TODO: check what happends if these buttons are clicked again and again. Override start time, or?
-                    this.props.changeNapStartTime(this.props.nap, moment())
+                    this.props.changeNapStartTime(this.props.nap, moment().format())
                       .then(this.setState({ startDate: moment(), showStartNapPicker: true }))
                 } icon='play'
                 />
@@ -106,7 +106,7 @@ class Nap extends React.Component {
                 <Button circular onClick={() =>
                   (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) &&
             this.props.currentUser.childminder &&
-              this.props.changeNapEndTime(this.props.nap, moment())
+              this.props.changeNapEndTime(this.props.nap, moment().format())
                 .then(this.setState({ endDate: moment(), showEndNapPicker: true }))
                 } icon='stop' />
 
@@ -120,7 +120,7 @@ class Nap extends React.Component {
                 <div>
                   {/* <h3 className='duration'>{this.props.nap.duration && `${this.props.nap.duration}` }</h3> */}
                   {/* <h3 className='duration'>{this.props.nap.end && `Total ${duration}` }</h3> */}
-                  <h3 className='duration'>{this.props.nap.end && diff.hours() >= 0 && diff.minutes() >= 0 ? `Total ${diff.hours()}:${diff.minutes()}` : 'Start must be before end' }</h3>
+                  <h3 className='duration'>{this.props.nap.end && diff.hours() >= 0 && diff.minutes() >= 0 && `Total ${diff.hours()}:${diff.minutes()}` }</h3>
                 </div>
               </Grid.Column>
               <Grid.Column>

@@ -17,8 +17,11 @@ class Food extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    // console.log('did update called')
+    console.log('did update called')
     if (prevProps.day.id !== this.props.day.id && this.props.day.id) {
+      this.refreshStateMethod()
+    }
+    if (JSON.stringify(prevProps.day) !== JSON.stringify(this.props.day)) {
       this.refreshStateMethod()
     }
   }
