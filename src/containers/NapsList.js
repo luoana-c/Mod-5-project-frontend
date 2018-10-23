@@ -162,17 +162,19 @@ class NapsList extends React.Component {
      }
 
      render () {
-       const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
+      //  const cotURL = require('../images/135028-baby-collection/svg/crib.svg')
+       const cotURL = require(`../images/${this.props.kid.gender}_sleep.jpg`)
+
        return (
          <Grid centered verticalAlign='middle' align className='napsListGrid'>
            <Grid.Row columns={2}>
              <Grid.Column >
-               <Image className='elem-icon' alt='' src={cotURL} height='50'width='50' />
+               <Image className='elem-icon' alt='' src={cotURL} height='100'width='110' />
              </Grid.Column>
 
              <Grid.Column >
                {this.props.currentUser.childminder &&
-               <Button className='square-full'  onClick={this.addNap} >
+               <Button className='square-full' onClick={this.addNap} >
               Add nap
                </Button>
                }

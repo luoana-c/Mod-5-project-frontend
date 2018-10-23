@@ -349,8 +349,10 @@ class Kid extends React.Component {
 
     render = () => {
       const fileName = this.props.kid.gender
-      const imageUrl = require(`../images/${fileName}.svg`)
-      const foodURL = require('../images/135028-baby-collection/svg/feeding-1.svg')
+      // const imageUrl = require(`../images/${fileName}.svg`)
+      const imageUrl = require(`../images/${fileName}_top.jpg`)
+      // const foodURL = require('../images/135028-baby-collection/svg/feeding-1.svg')
+      const foodURL = require(`../images/${this.props.kid.gender}_food.jpg`)
 
       return (
         <div>
@@ -370,12 +372,12 @@ class Kid extends React.Component {
           } */}
 
           <Grid verticalAlign='middle' centered columns={2}>
-            <Grid.Column className='kid-pic'width={3}>
+            <Grid.Column className='kid-pic'width={4}>
               <Image
                 alt=''
                 src={imageUrl}
-                height='50'
-                width='50'
+                height='70'
+                width='70'
               />
             </Grid.Column>
 
@@ -399,23 +401,13 @@ class Kid extends React.Component {
                   kid={this.props.kid}
                 />
               </div>
-              <div className='item-list'>
-                <NappyPotty
-                  currentUser={this.props.currentUser}
-                  addNappy={this.addNappy}
-                  addNappyWet={this.addNappyWet}
-                  removeNappyWet={this.removeNappyWet}
-                  addNappyBM={this.addNappyBM}
-                  removeNappyBM={this.removeNappyBM}
-                  nappy={this.state.day.nappy_potty}
-                />
-              </div>
+
               <div className='item-list'>
 
                 <Grid centered verticalAlign='top' align className='foodGrid' >
                   <Grid.Row columns={2}>
                     <Grid.Column >
-                      <Image className='elem-icon' alt='' src={foodURL} height='50' width='50' />
+                      <Image className='elem-icon' alt='' src={foodURL} height='100' width='100' />
                     </Grid.Column>
 
                     <Grid.Column >
@@ -436,6 +428,19 @@ class Kid extends React.Component {
                   />
                   }
                 </Grid>
+              </div>
+
+              <div className='item-list'>
+                <NappyPotty
+                  currentUser={this.props.currentUser}
+                  addNappy={this.addNappy}
+                  addNappyWet={this.addNappyWet}
+                  removeNappyWet={this.removeNappyWet}
+                  addNappyBM={this.addNappyBM}
+                  removeNappyBM={this.removeNappyBM}
+                  nappy={this.state.day.nappy_potty}
+                  kid={this.props.kid}
+                />
               </div>
 
             </div>

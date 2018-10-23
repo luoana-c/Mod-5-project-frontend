@@ -5,18 +5,19 @@ import '../App.css'
 
 const KidCard = (props) => {
   const fileName = props.kid.gender
-  const imageUrl = require(`../images/${fileName}.svg`)
+  // const imageUrl = require(`../images/${fileName}.svg`)
+  const imageUrl = require(`../images/${fileName}_top.jpg`)
   return (
 
     <Link to={`/kids/${props.kid.id}`}>
       <Grid verticalAlign='middle' centered columns={2}>
-        <Grid.Column className='kid-pic'width={3}>
+        <Grid.Column className='kid-pic'width={4}>
           <Image
             id='kid list image'
             alt=''
             src={imageUrl}
-            height='50'
-            width='50' />
+            height='70'
+            width='70' />
         </Grid.Column>
 
         <Grid.Column>

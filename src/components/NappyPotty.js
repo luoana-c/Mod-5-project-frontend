@@ -30,13 +30,14 @@ class NappyPotty extends React.Component {
   }
 
   render () {
-    const nappyURL = require('../images/135028-baby-collection/svg/diaper.svg')
+    // const nappyURL = require('../images/135028-baby-collection/svg/diaper.svg')
+    const nappyURL = require(`../images/${this.props.kid.gender}_potty.jpg`)
 
     return (
       <Grid centered verticalAlign='top' align className='pottyGrid'>
         <Grid.Row columns={2}>
           <Grid.Column >
-            <Image className='elem-icon' alt='' src={nappyURL} height='50' width='50' />
+            <Image className='elem-icon' alt='' src={nappyURL} height='100' width='110' />
           </Grid.Column>
 
           <Grid.Column >
