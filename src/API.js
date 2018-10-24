@@ -32,7 +32,8 @@ class API {
   //   }
 }
 
-API.baseURL = 'http://localhost:3000/api/v1'
+API.baseURL = window.location.href.includes('localhost') ? 'http://localhost:3000/api/v1' : 'https://pigtail-stories-backend.herokuapp.com/api/v1'
+// API.baseURL = 'https://pigtail-stories-backend.herokuapp.com/api/v1'
 API.signinURL = API.baseURL + '/signin'
 API.signupURL = API.baseURL + '/signup'
 
