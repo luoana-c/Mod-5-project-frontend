@@ -5,6 +5,7 @@ import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../containers/NapsList.js'
 import '../containers/NapsList.css'
+import DateUtils from '../utils/dateUtils'
 
 class Nap extends React.Component {
     state = {
@@ -89,7 +90,7 @@ class Nap extends React.Component {
                   (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) &&
                   this.props.currentUser.childminder &&
                     // TODO: check what happends if these buttons are clicked again and again. Override start time, or?
-                    this.props.changeNapStartTime(this.props.nap, moment().format())
+                    this.props.changeNapStartTime(this.props.nap, moment())
                       .then(this.setState({ startDate: moment(), showStartNapPicker: true }))
                 } icon='play'
                 />
@@ -98,7 +99,7 @@ class Nap extends React.Component {
                   {this.state.showStartNapPicker && this.startNapPicker()}
                 </div>
 
-                <p className='timeLabel'> {this.props.nap.start && `${moment(this.props.nap.start).format('HH:mm')}`}</p>
+                <p className='timeLabel'> {this.props.nap.start && `${DateUtils.compensateUtcOffset(moment(this.props.nap.start)).format('HH:mm')}`}</p>
 
               </Grid.Column>
 
@@ -106,14 +107,14 @@ class Nap extends React.Component {
                 <Button circular onClick={() =>
                   (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) &&
             this.props.currentUser.childminder &&
-              this.props.changeNapEndTime(this.props.nap, moment().format())
+              this.props.changeNapEndTime(this.props.nap, moment())
                 .then(this.setState({ endDate: moment(), showEndNapPicker: true }))
                 } icon='stop' />
 
                 <div className='nap-time'>
                   {this.state.showEndNapPicker && this.endNapPicker()}
                 </div>
-                <p className='timeLabel'>{this.props.nap.end && `${moment(this.props.nap.end).format('HH:mm')}` }</p>
+                <p className='timeLabel'>{this.props.nap.end && `${DateUtils.compensateUtcOffset(moment(this.props.nap.end)).format('HH:mm')}` }</p>
               </Grid.Column>
 
               <Grid.Column>

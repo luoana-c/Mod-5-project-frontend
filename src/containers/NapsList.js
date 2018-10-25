@@ -4,6 +4,7 @@ import { Button, Image, Grid } from 'semantic-ui-react'
 import Nap from '../components/Nap'
 import API from '../API'
 import './NapsList.css'
+import DateUtils from '../utils/dateUtils'
 
 class NapsList extends React.Component {
     state = {
@@ -95,15 +96,7 @@ class NapsList extends React.Component {
       if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
       // updates the backend with a start nap time
       // updates the state in NapsList with start nap time
-        if (moment.isMoment(time)) {
-        // Creeaza o noua data UTC din data initiala care are offset info
-        // Pe urma adauga la ea offset infoul datei de input
-        // E un hack: practic creezi o noua data UTC care sa aibe valoare datei non UTC
-        // Exemplu
-        // 2000-01-01 ora 18:00+1:00 (non UTC) devine
-        // 2000-01-01 ora 18:00 (UTC)
-          time = moment(time).utc().add(time.utcOffset(), 'm')
-        }
+        time = DateUtils.compensateUtcOffset(time)
 
         const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
         const indexOfNapToChange = this.state.naps.indexOf(foundNap)
@@ -128,9 +121,7 @@ class NapsList extends React.Component {
       if (moment(this.props.day.date).format('YYYY-MM-DD') === moment().startOf('day').format('YYYY-MM-DD')) {
       // updates the backend with an end nap time
       // updates the state in NapsList with end nap time
-        if (moment.isMoment(time)) {
-          time = moment(time).utc().add(time.utcOffset(), 'm')
-        }
+        time = DateUtils.compensateUtcOffset(time)
 
         const foundNap = this.state.naps.find(stateNap => stateNap.id === nap.id)
         const indexOfNapToChange = this.state.naps.indexOf(foundNap)
