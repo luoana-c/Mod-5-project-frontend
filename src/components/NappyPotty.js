@@ -92,7 +92,7 @@ class NappyPotty extends React.Component {
 
                     <Grid.Column textAlign='center'>
                       <Button circular icon='add' onClick={this.props.currentUser.childminder && this.props.addNappyWet} />
-                      {this.state.nappy.wet > 0 &&
+                      {this.state.nappy && this.state.nappy.wet > 0 &&
                         <Button className='wet minus-buttons' circular icon='minus' onClick={this.props.currentUser.childminder && this.props.removeNappyWet} />
                       }
                     </Grid.Column>
@@ -130,7 +130,7 @@ class NappyPotty extends React.Component {
                     </Grid.Row>
                   }
 
-                  {this.state.nappy.bm_normal > 0 &&
+                  {this.state.nappy && this.state.nappy.bm_normal > 0 &&
                   <Grid.Row columns={2}>
                     <Grid.Column>
                       <p className='nappy-numbers'> normal {this.state.nappy.bm_normal}</p>
@@ -141,7 +141,7 @@ class NappyPotty extends React.Component {
                     </Grid.Column>
                   </Grid.Row>
                   }
-                  {this.state.nappy.bm_runny > 0 &&
+                  {this.state.nappy && this.state.nappy.bm_runny > 0 &&
                   <Grid.Row columns={2}>
                     <Grid.Column>
                       <p className='nappy-numbers'> runny {this.state.nappy.bm_runny}</p>
@@ -153,7 +153,7 @@ class NappyPotty extends React.Component {
                   </Grid.Row>
                   }
 
-                  {this.state.nappy.bm_hard > 0 &&
+                  {this.state.nappy && this.state.nappy.bm_hard > 0 &&
                   <Grid.Row columns={2}>
                     <Grid.Column>
                       <p className='nappy-numbers'> hard {this.state.nappy.bm_hard}</p>
